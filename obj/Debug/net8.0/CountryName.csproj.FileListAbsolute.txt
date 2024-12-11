@@ -1,0 +1,14 @@
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\CountryName.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\CountryName.AssemblyInfoInputs.cache
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\CountryName.AssemblyInfo.cs
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\CountryName.csproj.CoreCompileInputs.cache
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\bin\Debug\net8.0\CountryName.exe
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\bin\Debug\net8.0\CountryName.deps.json
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\bin\Debug\net8.0\CountryName.runtimeconfig.json
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\bin\Debug\net8.0\CountryName.dll
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\bin\Debug\net8.0\CountryName.pdb
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\CountryName.dll
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\refint\CountryName.dll
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\CountryName.pdb
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\CountryName.genruntimeconfig.cache
+C:\Users\shivesh.trivedi\source\repos\CountryName\CountryName\obj\Debug\net8.0\ref\CountryName.dll
