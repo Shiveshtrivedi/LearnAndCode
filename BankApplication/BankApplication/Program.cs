@@ -1,9 +1,21 @@
 ﻿namespace BankApplication
 {
+    public enum TransactionType
+    {
+        Deposit,
+        Withdraw
+    }
+
+    public enum AccountType
+    {
+        Current,
+        Saving
+    }
     public abstract class Account
     {
         protected decimal Balance { get; set; }
         public string HolderName { get; set; }
+        public abstract string Withdraw(decimal amount);
 
         public Account(string holderName,decimal initialBalance = 0)
         {
@@ -20,8 +32,6 @@
             }
             return "Invalid deposit amount";
         }
-
-        public abstract string Withdraw(decimal amount);
 
         public decimal GetBalance()
         {
@@ -80,29 +90,29 @@
 
     public class Bank
     {
-        private Dictionary<string, Account> Accounts { get; set; }
+        private Dictionary<AccountType, Account> Accounts { get; set; }
 
         public Bank()
         {
-            Accounts = new Dictionary<string, Account>();
+            Accounts = new Dictionary<AccountType, Account>();
         }
 
-        public void AddAccount(string accountId, Account account)
+        public void AddAccount(AccountType accountType, Account account)
         {
-            Accounts[accountId] = account;
+            Accounts[accountType] = account;
         }
 
-        public string ProcessTransaction(string accountId, string action, decimal amount)
+        public string ProcessTransaction(AccountType accountType, TransactionType action, decimal amount)
         {
-            if (!Accounts.ContainsKey(accountId))
+            if (!Accounts.ContainsKey(accountType))
                 return "Account not found";
 
-            Account account = Accounts[accountId];
-            switch (action.ToLower())
+            Account account = Accounts[accountType];
+            switch (action)
             {
-                case "deposit":
+                case TransactionType.Deposit:
                     return account.Deposit(amount);
-                case "withdraw":
+                case TransactionType.Withdraw:
                     return account.Withdraw(amount);
                 default:
                     return "Invalid action";
@@ -129,11 +139,11 @@
             SavingsAccount savings = new SavingsAccount("ravi",500, 1000);
             CurrentAccount current = new CurrentAccount("mohan",1000, 500);
 
-            bank.AddAccount("SAVING ACCOUNT", savings);
-            bank.AddAccount("CURRENT ACCOUNT", current);
+            bank.AddAccount(AccountType.Saving, savings);
+            bank.AddAccount(AccountType.Current, current);
 
-            Console.WriteLine(bank.ProcessTransaction("SAVING ACCOUNT", "withdraw", 600));
-            Console.WriteLine(bank.ProcessTransaction("CURRENT ACCOUNT", "withdraw", 1200));
+            Console.WriteLine(bank.ProcessTransaction(AccountType.Saving, TransactionType.Withdraw, 600));
+            Console.WriteLine(bank.ProcessTransaction(AccountType.Current, TransactionType.Withdraw, 1200));
 
             bank.DisplayAccounts();
         }
