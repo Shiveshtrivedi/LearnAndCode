@@ -1,0 +1,14 @@
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\bin\Debug\net8.0\DivisorApp.exe
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\bin\Debug\net8.0\DivisorApp.deps.json
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\bin\Debug\net8.0\DivisorApp.runtimeconfig.json
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\bin\Debug\net8.0\DivisorApp.dll
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\bin\Debug\net8.0\DivisorApp.pdb
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\DivisorApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\DivisorApp.AssemblyInfoInputs.cache
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\DivisorApp.AssemblyInfo.cs
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\DivisorApp.csproj.CoreCompileInputs.cache
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\DivisorApp.dll
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\refint\DivisorApp.dll
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\DivisorApp.pdb
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\DivisorApp.genruntimeconfig.cache
+C:\Users\shivesh.trivedi\source\repos\DivisorApp\DivisorApp\obj\Debug\net8.0\ref\DivisorApp.dll
