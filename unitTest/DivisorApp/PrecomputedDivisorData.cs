@@ -11,18 +11,18 @@
 
         private static void ComputePrefixData()
         {
-            for (int i = 2; i < DivisorCalculator.Max - 1; i++)
+            for (int index = 2; index < DivisorCalculator.Max - 1; index++)
             {
-                PrefixSameDivisors[i] = PrefixSameDivisors[i - 1];
-                if (DivisorCalculator.DivisorCounts[i] == DivisorCalculator.DivisorCounts[i + 1])
+                PrefixSameDivisors[index] = PrefixSameDivisors[index - 1];
+                if (DivisorCalculator.DivisorCounts[index] == DivisorCalculator.DivisorCounts[index + 1])
                 {
-                    PrefixSameDivisors[i]++;
+                    PrefixSameDivisors[index]++;
                 }
             }
 
-            for (int i = DivisorCalculator.Max - 1; i < DivisorCalculator.Max; i++)
+            for (int index = DivisorCalculator.Max - 1; index < DivisorCalculator.Max; index++)
             {
-                PrefixSameDivisors[i] = PrefixSameDivisors[i - 1];
+                PrefixSameDivisors[index] = PrefixSameDivisors[index - 1];
             }
         }
     }

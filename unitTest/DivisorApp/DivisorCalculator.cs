@@ -12,11 +12,11 @@
 
         private static void ComputeDivisors()
         {
-            for (int i = 1; i < Max; i++)
+            for (int divisor = 1; divisor < Max; divisor++)
             {
-                for (int j = i; j < Max; j += i)
+                for (int multiple = divisor; multiple < Max; multiple += divisor)
                 {
-                    DivisorCounts[j]++;
+                    DivisorCounts[multiple]++;
                 }
             }
         }
