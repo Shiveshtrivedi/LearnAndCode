@@ -1,4 +1,6 @@
-﻿using DivisorApp.Services;
+﻿using System;
+using DivisorApp.Core;
+using DivisorApp.Services;
 
 namespace DivisorApp
 {
@@ -6,27 +8,39 @@ namespace DivisorApp
     {
         static void Main()
         {
-            Console.WriteLine("Enter number of test cases:");
-            if (!int.TryParse(Console.ReadLine(), out int numberTestCases) || numberTestCases < 1)
+            try
             {
-                Console.WriteLine("Invalid number of test cases.");
-                return;
-            }
+                Console.WriteLine("Enter number of test cases:");
+                if (!int.TryParse(Console.ReadLine(), out int numberTestCases) || numberTestCases < 1)
+                {
+                    Console.WriteLine("Invalid number of test cases.");
+                    return;
+                }
 
-            for (int testCaseIndex = 0; testCaseIndex < numberTestCases; testCaseIndex++)
+                IDivisorDataProvider dataProvider = new PrecomputedDivisorDataProvider();
+                var divisorService = new DivisorService(dataProvider);
+
+                for (int testCaseIndex = 0; testCaseIndex < numberTestCases; testCaseIndex++)
+                {
+                    Console.WriteLine("Enter k:");
+                    if (int.TryParse(Console.ReadLine(), out int upperLimit))
+                    {
+                        int result = divisorService.GetCountOfSameDivisorsLessThan(upperLimit);
+                        Console.WriteLine($"Result: {result}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Skipping this test case.");
+                    }
+                }
+
+            }
+            catch (Exception ex) 
             {
-                Console.WriteLine("Enter k:");
-                if (int.TryParse(Console.ReadLine(), out int upperLimit))
-                {
-                    int result = DivisorService.GetCountOfSameDivisorsLessThan(upperLimit);
-                    Console.WriteLine($"Result: {result}");
-                }
-                else
-                {
-                    Console.WriteLine("Invalid input. Skipping this test case.");
-                }
+                Console.WriteLine("An unexpected error occurred:");
+                Console.WriteLine(ex.Message);
             }
-
+            
         }
     }
 }

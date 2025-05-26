@@ -1,29 +1,36 @@
 ﻿namespace DivisorApp.Core
 {
-    public static class PrecomputedDivisorData
+    public class PrecomputedDivisorDataProvider : IDivisorDataProvider
     {
-        public static readonly int[] PrefixSameDivisors = new int[DivisorCalculator.Max];
+        private static readonly int[] PrefixSameDivisors = new int[DivisorCalculator.Max];
 
-        static PrecomputedDivisorData()
+        static PrecomputedDivisorDataProvider()
         {
             ComputePrefixData();
         }
 
         private static void ComputePrefixData()
         {
-            for (int index = 2; index < DivisorCalculator.Max - 1; index++)
+            for (int currentNumber = 2; currentNumber < DivisorCalculator.Max - 1; currentNumber++)
             {
-                PrefixSameDivisors[index] = PrefixSameDivisors[index - 1];
-                if (DivisorCalculator.DivisorCounts[index] == DivisorCalculator.DivisorCounts[index + 1])
+                PrefixSameDivisors[currentNumber] = PrefixSameDivisors[currentNumber - 1];
+                if (DivisorCalculator.DivisorCounts[currentNumber] == DivisorCalculator.DivisorCounts[currentNumber + 1])
                 {
-                    PrefixSameDivisors[index]++;
+                    PrefixSameDivisors[currentNumber]++;
                 }
             }
 
-            for (int index = DivisorCalculator.Max - 1; index < DivisorCalculator.Max; index++)
+            PrefixSameDivisors[DivisorCalculator.Max - 1] = PrefixSameDivisors[DivisorCalculator.Max - 2];
+        }
+
+        public int GetPrefixSameDivisorCount(int limit)
+        {
+            if (limit < 0 || limit >= DivisorCalculator.Max)
             {
-                PrefixSameDivisors[index] = PrefixSameDivisors[index - 1];
+                throw new ArgumentOutOfRangeException(nameof(limit), $"Limit must be between 0 and {DivisorCalculator.Max - 1}.");
             }
+
+            return PrefixSameDivisors[limit];
         }
     }
 }

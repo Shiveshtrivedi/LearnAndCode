@@ -2,12 +2,19 @@
 
 namespace DivisorApp.Services
 {
-    public static class DivisorService
+    public class DivisorService
     {
-        public static int GetCountOfSameDivisorsLessThan(int upperLimit)
+        private readonly IDivisorDataProvider _dataProvider;
+
+        public DivisorService(IDivisorDataProvider dataProvider)
+        {
+            _dataProvider = dataProvider;
+        }
+
+        public int GetCountOfSameDivisorsLessThan(int upperLimit)
         {
             if (upperLimit < 3) return 0;
-            return PrecomputedDivisorData.PrefixSameDivisors[upperLimit - 1];
+            return _dataProvider.GetPrefixSameDivisorCount(upperLimit - 1);
         }
     }
 }

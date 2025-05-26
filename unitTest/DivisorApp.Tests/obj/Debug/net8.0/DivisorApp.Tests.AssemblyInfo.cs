@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DivisorApp.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d95bcd8ee378cea251eac17c4ca40f4ec9ca69f2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8f6e26c7e13cebf3a9b6b1262b8fffb0f767c8c")]
 [assembly: System.Reflection.AssemblyProductAttribute("DivisorApp.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DivisorApp.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
