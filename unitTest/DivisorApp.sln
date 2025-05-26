@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DivisorApp", "DivisorApp\DivisorApp.csproj", "{F496B24D-220D-4BF0-80AA-2551E3E85F6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DivisorApp.Tests", "DivisorApp.Tests\DivisorApp.Tests.csproj", "{130E0B4A-04C8-4042-9927-C0618AB9E9C0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F496B24D-220D-4BF0-80AA-2551E3E85F6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F496B24D-220D-4BF0-80AA-2551E3E85F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F496B24D-220D-4BF0-80AA-2551E3E85F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F496B24D-220D-4BF0-80AA-2551E3E85F6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{130E0B4A-04C8-4042-9927-C0618AB9E9C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{130E0B4A-04C8-4042-9927-C0618AB9E9C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{130E0B4A-04C8-4042-9927-C0618AB9E9C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{130E0B4A-04C8-4042-9927-C0618AB9E9C0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A9A981C-D61C-4201-9E2F-B52F2CC2C716}
+	EndGlobalSection
+EndGlobal
