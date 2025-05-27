@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Context
 {
-    public class InventoryDb
+    public static class SupplierDb
     {
-        public static List<Inventory> InventoryData = new List<Inventory>();
+        public static List<Supplier> SupplierData = new List<Supplier>();
     }
 }

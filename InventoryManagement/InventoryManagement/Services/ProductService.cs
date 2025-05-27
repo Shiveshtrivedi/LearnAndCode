@@ -13,14 +13,18 @@ namespace InventoryManagement.Services
     public class ProductService : IProductService
     {
        private readonly IProductRepository _productRepository;
-        public ProductService(IProductRepository productRepository) 
+       private readonly ICategoryService _categoryService;
+       private readonly ISupplierService _supplierService;
+
+        public ProductService(IProductRepository productRepository, ICategoryService categoryService) 
         {
             _productRepository = productRepository;
+            _categoryService= categoryService;
         }
         public void AddProduct()
         {
 
-            Product product = ProductInputHelper.GetInputFromUser();
+            Product product = ProductInputHelper.GetInputFromUser(_categoryService,_supplierService);
 
             OperationResult result = _productRepository.AddProduct(product);
 
@@ -66,7 +70,7 @@ namespace InventoryManagement.Services
         public void UpdateProduct()
         {
             
-            Product product = ProductInputHelper.GetInputFromUser(isUpdate:true);
+            Product product = ProductInputHelper.GetInputFromUser(_categoryService,_supplierService,isUpdate:true);
 
             Product updatedProduct = _productRepository.UpdateProduct(product);
 

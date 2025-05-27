@@ -10,7 +10,9 @@ namespace InventoryManagement
         static void Main(string[] args)
         {
             IProductRepository productRepository = new ProductRepository();
-            IProductService productService = new ProductService(productRepository);
+            ICategoryRepository categoryRepository = new CategoryRepository();
+            ICategoryService categoryService = new CategoryService(categoryRepository);
+            IProductService productService = new ProductService(productRepository,categoryService);
 
             bool exit = false;
 
