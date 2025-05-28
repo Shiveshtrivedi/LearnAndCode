@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Exceptions
 {
-    public class ProductNotFoundException : Exception
+    public class ProductNotFoundException : InventoryException
     {
         public ProductNotFoundException(int productId) : base($"Product with ID {productId} was not found")
         {

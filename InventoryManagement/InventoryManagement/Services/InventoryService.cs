@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Models;
+﻿using InventoryManagement.Exceptions;
+using InventoryManagement.Models;
 using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
 using System;
@@ -23,7 +24,7 @@ namespace InventoryManagement.Services
         {
             if(product == null)
             {
-                return new OperationResult { ErrorMessage = "Product not Found"};
+                throw new InventoryException("Product cannot be null while adding into inventory.");
             }
 
             var inventory = new Inventory
@@ -40,12 +41,18 @@ namespace InventoryManagement.Services
         public void UpdateInventory()
         {
             Console.WriteLine("Enter Product Id:");
-            int productId = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int productId))
+                throw new InventoryException("Invalid Product ID input.");
 
             Console.WriteLine("Enter New Quantity:");
-            int newQty = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int newQuantity))
+                throw new InventoryException("Invalid quantity input.");
 
-            var result = _inventoryRepository.UpdateInventory(productId, newQty);
+            var result = _inventoryRepository.UpdateInventory(productId, newQuantity);
+
+            if (!result.IsSuccess)
+                throw new OperationFailedException("UpdateInventory", result.ErrorMessage);
+
             Console.WriteLine(result.IsSuccess ? "Inventory updated." : $"Error: {result.ErrorMessage}");
         }
 

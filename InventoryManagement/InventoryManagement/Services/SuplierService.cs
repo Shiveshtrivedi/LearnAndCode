@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Models;
+﻿using InventoryManagement.Exceptions;
+using InventoryManagement.Models;
 using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
 using System;
@@ -51,7 +52,7 @@ namespace InventoryManagement.Services
         public void ViewAllSuppliers()
         {
             var suppliers = _supplierRepository.GetAllSuppliers();
-            Console.WriteLine("---- Suppliers List ----");
+            Console.WriteLine("-* Suppliers List *-");
             foreach (var supplier in suppliers)
             {
                 Console.WriteLine($"ID: {supplier.SupplierId}, Name: {supplier.SupplierName}, Contact: {supplier.ContactNumber}");
@@ -61,22 +62,14 @@ namespace InventoryManagement.Services
         public void DeleteSupplier()
         {
             Console.WriteLine("Enter Supplier ID to delete:");
-            if (int.TryParse(Console.ReadLine(), out int supplierId))
-            {
-                var result = _supplierRepository.DeleteSupplier(supplierId);
-                if (result.IsSuccess)
-                {
-                    Console.WriteLine("Supplier deleted successfully.");
-                }
-                else
-                {
-                    Console.WriteLine($"Error: {result.ErrorMessage}");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Invalid input. Please enter a valid ID.");
-            }
+            if (!int.TryParse(Console.ReadLine(), out int supplierId))
+                throw new InventoryException("Invalid supplier ID input.");
+
+            var result = _supplierRepository.DeleteSupplier(supplierId);
+            if (!result.IsSuccess)
+                throw new OperationFailedException("DeleteSupplier", result.ErrorMessage);
+
+            Console.WriteLine("Supplier deleted successfully.");
         }
     }
 

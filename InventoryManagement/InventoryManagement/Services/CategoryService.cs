@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Models;
+﻿using InventoryManagement.Exceptions;
+using InventoryManagement.Models;
 using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
 using System;
@@ -31,12 +32,11 @@ namespace InventoryManagement.Services
 
             if (result.IsSuccess)
             {
-                Console.WriteLine("Category deleted successfully.");
+                throw new OperationFailedException("Delete Category", result.ErrorMessage);
             }
-            else
-            {
-                Console.WriteLine($"Failed to delete category: {result.ErrorMessage}");
-            }
+
+            Console.WriteLine("Category deleted successfully.");
+
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -46,7 +46,14 @@ namespace InventoryManagement.Services
 
         public Category GetCategoryById(int categoryId)
         {
-            return _categoryRepository.GetCategoryById(categoryId);
+            Category category = _categoryRepository.GetCategoryById(categoryId);
+
+            if (category == null)
+            {
+                throw new CategoryNotFoundException(categoryId);
+            }
+
+            return category;
         }
 
         public void UpdateCategory(Category updatedCategory)
@@ -54,8 +61,7 @@ namespace InventoryManagement.Services
             var existingCategory = _categoryRepository.GetCategoryById(updatedCategory.CategoryId);
             if (existingCategory == null)
             {
-                Console.WriteLine("Category not found.");
-                return;
+                throw new CategoryNotFoundException(updatedCategory.CategoryId);
             }
 
             existingCategory.CategoryName = updatedCategory.CategoryName;

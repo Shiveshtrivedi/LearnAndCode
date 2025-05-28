@@ -61,15 +61,12 @@ namespace InventoryManagement.Services
         {
             OperationResult result = _productRepository.DeleteProduct(productId);
 
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
-                Console.WriteLine("Product deleted successfully");
+                throw new OperationFailedException("Delete Product", result.ErrorMessage);
             }
-            else
-            {
-                Console.WriteLine($"while deleting {result.ErrorMessage}");
-            }
-            
+
+            Console.WriteLine("Product deleted successfully");
         } 
 
         public IEnumerable<Product> GetAllProducts()
