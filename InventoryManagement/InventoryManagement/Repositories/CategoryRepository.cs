@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Context;
+using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
 using InventoryManagement.Utils;
 using System;
@@ -13,32 +14,33 @@ namespace InventoryManagement.Repositories
     {
         public OperationResult AddCategory(Category category)
         {
-            var existingCategory = GetCategoryById(category.CategoryId);
+            try 
+            {
+                var existingCategory = GetCategoryById(category.CategoryId);
 
-            if (existingCategory != null)
+                CategoryDb.CategoryData.Add(category);
+
+                return new OperationResult { IsSuccess = true };
+            }
+            catch 
             {
                 return new OperationResult { IsSuccess = false, ErrorMessage = "Product already exist" };
             }
-            CategoryDb.CategoryData.Add(category);
-
-            return new OperationResult { IsSuccess = true };
         }
 
         public OperationResult DeleteCategory(int categoryId)
         {
-            Category existingCategory = GetCategoryById(categoryId);
-
-            if (existingCategory != null) 
+            try
             {
+                Category existingCategory = GetCategoryById(categoryId);
                 CategoryDb.CategoryData.Remove(existingCategory);
-
-               return new OperationResult { IsSuccess = true };
+                
+                return new OperationResult { IsSuccess = true };
             }
-            else
+            catch (Exception ex)
             {
-                return new OperationResult { ErrorMessage = "No Category Exist" };
+                return new OperationResult { ErrorMessage = $"No Category Exist {ex.Message}" };
             }
-
         }
 
         public IEnumerable<Category> GetAllCategories()
@@ -49,6 +51,9 @@ namespace InventoryManagement.Repositories
         public Category GetCategoryById(int categoryId)
         {
             Category category = CategoryDb.CategoryData.FirstOrDefault(categories => categories.CategoryId == categoryId);
+
+            if (category == null)
+                throw new CategoryNotFoundException(categoryId);
 
             return category;
         }

@@ -2,6 +2,7 @@
 using InventoryManagement.Repositories;
 using InventoryManagement.Services;
 using InventoryManagement.Utils;
+using InventoryManagement.Utils.Interfaces;
 using System;
 
 namespace InventoryManagement
@@ -14,14 +15,17 @@ namespace InventoryManagement
             ICategoryRepository categoryRepository = new CategoryRepository();
             ICategoryService categoryService = new CategoryService(categoryRepository);
             IInventoryRepository inventoryRepository = new InventoryRepository();
+            ISupplierInputHelper supplierInput = new SupplierInputHelper();
+            ICategoryInputHelper categoryInput = new CategoryInputHelper();
+            IProductInputHelper productInput = new ProductInputHelper(categoryInput,supplierInput);
             IInventoryService inventoryService = new InventoryService(inventoryRepository, productRepository);
-            IProductService productService = new ProductService(productRepository, categoryService, inventoryService);
+            IProductService productService = new ProductService(productRepository, categoryService, inventoryService,productInput);
 
             bool exit = false;
 
             while (!exit)
             {
-                Console.WriteLine("\n==== Product Management Menu ====");
+                Console.WriteLine("\n+++ Product Management Menu +++");
                 Console.WriteLine("1. Add Product");
                 Console.WriteLine("2. Add Multiple Product");
                 Console.WriteLine("3. View All Products");

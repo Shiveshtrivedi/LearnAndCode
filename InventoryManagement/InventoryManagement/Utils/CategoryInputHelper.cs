@@ -1,5 +1,6 @@
 ﻿using InventoryManagement.Models;
 using InventoryManagement.Services;
+using InventoryManagement.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Utils
 {
-    public static class CategoryInputHelper
+    public class CategoryInputHelper : ICategoryInputHelper
     {
-        public static Category GetCategoryFromUser(ICategoryService categoryService)
+        public Category GetCategoryFromUser(ICategoryService categoryService)
         {
             var categories = categoryService.GetAllCategories().ToList();
 
@@ -21,7 +22,7 @@ namespace InventoryManagement.Utils
             }
 
             Console.WriteLine("Enter existing Category ID or type 'new' to create a new category:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             if (input.Trim().ToLower() == "new")
             {

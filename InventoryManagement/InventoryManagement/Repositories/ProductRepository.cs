@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using InventoryManagement.Context;
 using InventoryManagement.Utils;
+using InventoryManagement.Exceptions;
 
 namespace InventoryManagement.Repositories
 {
@@ -20,32 +21,44 @@ namespace InventoryManagement.Repositories
         public Product GetProductById(int productId)
         {
             Product product = ProductDb.ProductData.FirstOrDefault(products => products.ProductId == productId);
+
+            if (product == null)
+            {
+                throw new ProductNotFoundException(productId);
+            }
+
             return product;
         }
         public OperationResult AddProduct(Product product)
         {
-            var existingProduct = GetProductById(product.ProductId); 
-
-            if (existingProduct != null)
+            try
             {
-                return new OperationResult { IsSuccess = false , ErrorMessage="Product already exist"};
-            }
-            ProductDb.ProductData.Add(product);
+                var existingProduct = GetProductById(product.ProductId);
 
-            return new OperationResult { IsSuccess = true };
+                ProductDb.ProductData.Add(product);
+
+                return new OperationResult { IsSuccess = true };
+            }
+            catch (Exception ex) 
+            {
+                return new OperationResult { IsSuccess = false, ErrorMessage = "Supplier already exists" };
+            }
         }
 
 
         public OperationResult DeleteProduct(int productId)
         {
-           Product product = GetProductById(productId);
-            if (product != null) 
-            { 
+            try
+            {
+                Product product = GetProductById(productId);
                 ProductDb.ProductData.Remove(product);
                 return new OperationResult { IsSuccess = true };
             }
+            catch (Exception ex)
+            {
+                return new OperationResult { IsSuccess = false , ErrorMessage= $"Product Not Found {ex.Message}" };
+            }
 
-            return new OperationResult { IsSuccess = false , ErrorMessage="Product Not Found" };
         }
 
         public Product UpdateProduct(Product product)

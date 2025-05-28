@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Context;
+using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
 using InventoryManagement.Utils;
 using System;
@@ -13,19 +14,29 @@ namespace InventoryManagement.Repositories
     {
         public Inventory GetInventoryByProductId(int productId)
         {
-            return InventoryDb.InventoryData.FirstOrDefault(i => i.ProductId == productId);
+            var existingInventory = InventoryDb.InventoryData.FirstOrDefault(i => i.ProductId == productId);
+
+            if(existingInventory == null)
+            {
+                throw new InventoryException("Inventory Not Found");
+            }
+
+            return existingInventory;
         }
 
         public OperationResult AddInventory(Inventory inventory)
         {
-            var existing = GetInventoryByProductId(inventory.ProductId);
-            if (existing != null)
+            try
             {
-                return new OperationResult { IsSuccess = false, ErrorMessage = "Inventory already exists for this product." };
-            }
+                var existing = GetInventoryByProductId(inventory.ProductId);
 
-            InventoryDb.InventoryData.Add(inventory);
-            return new OperationResult { IsSuccess = true };
+                InventoryDb.InventoryData.Add(inventory);
+                return new OperationResult { IsSuccess = true };
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult { IsSuccess = false, ErrorMessage = $"Inventory already exists for this product. {ex.Message}" };
+            }
         }
 
         public IEnumerable<Inventory> GetAllInventories()

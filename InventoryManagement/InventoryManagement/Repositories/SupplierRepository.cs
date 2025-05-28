@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Context;
+using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
 using InventoryManagement.Utils;
 using System;
@@ -13,22 +14,32 @@ namespace InventoryManagement.Repositories
     {
         public OperationResult AddSupplier(Supplier supplier)
         {
-            var existing = SupplierDb.SupplierData.FirstOrDefault(s => s.SupplierId == supplier.SupplierId);
-            if (existing != null)
-                return new OperationResult { IsSuccess = false, ErrorMessage = "Supplier already exists" };
+            try
+            {
+                var existingSupplier = GetSupplierById(supplier.SupplierId);
 
-            SupplierDb.SupplierData.Add(supplier);
-            return new OperationResult { IsSuccess = true };
+                SupplierDb.SupplierData.Add(supplier);
+                return new OperationResult { IsSuccess = true };
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult { IsSuccess = false, ErrorMessage = "Supplier already exists" };
+            }
+
         }
 
         public OperationResult DeleteSupplier(int supplierId)
         {
-            var supplier = GetSupplierById(supplierId);
-            if (supplier == null)
-                return new OperationResult { IsSuccess = false, ErrorMessage = "Supplier not found" };
-
-            SupplierDb.SupplierData.Remove(supplier);
-            return new OperationResult { IsSuccess = true };
+           try
+            {
+                var supplier = GetSupplierById(supplierId);
+                SupplierDb.SupplierData.Remove(supplier);
+                return new OperationResult { IsSuccess = true };
+            }
+            catch (Exception ex) 
+            {
+                return new OperationResult { IsSuccess = false, ErrorMessage = $"Supplier not found {ex.Message}" };
+            }
         }
 
         public IEnumerable<Supplier> GetAllSuppliers()
@@ -39,6 +50,10 @@ namespace InventoryManagement.Repositories
         public Supplier GetSupplierById(int supplierId)
         {
             Supplier existingSupplier = SupplierDb.SupplierData.FirstOrDefault(s => s.SupplierId == supplierId);
+
+            if (existingSupplier == null)
+                throw new SupplierNotFoundException(supplierId);
+
             return existingSupplier;
         }
     }

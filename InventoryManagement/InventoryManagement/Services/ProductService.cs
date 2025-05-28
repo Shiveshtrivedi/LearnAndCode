@@ -2,6 +2,7 @@
 using InventoryManagement.Models;
 using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
+using InventoryManagement.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,18 +17,21 @@ namespace InventoryManagement.Services
        private readonly IProductRepository _productRepository;
        private readonly ICategoryService _categoryService;
        private readonly ISupplierService _supplierService;
-        private readonly IInventoryService _inventoryService;
+       private readonly IInventoryService _inventoryService;
+       private readonly IProductInputHelper _productInputHelper;
 
-        public ProductService(IProductRepository productRepository, ICategoryService categoryService, IInventoryService inventoryService) 
+
+        public ProductService(IProductRepository productRepository, ICategoryService categoryService, IInventoryService inventoryService, IProductInputHelper productInputHelper) 
         {
             _productRepository = productRepository;
             _categoryService = categoryService;
             _inventoryService = inventoryService;
+            _productInputHelper = productInputHelper;
         }
         public void AddProduct()
         {
 
-            Product product = ProductInputHelper.GetInputFromUser(_categoryService,_supplierService);
+            Product product = _productInputHelper.GetInputFromUser(_categoryService,_supplierService);
 
             OperationResult result = _productRepository.AddProduct(product);
             
@@ -91,7 +95,7 @@ namespace InventoryManagement.Services
         public void UpdateProduct()
         {
             
-            Product product = ProductInputHelper.GetInputFromUser(_categoryService,_supplierService,isUpdate:true);
+            Product product = _productInputHelper.GetInputFromUser(_categoryService,_supplierService,isUpdate:true);
 
             Product updatedProduct = _productRepository.UpdateProduct(product);
 

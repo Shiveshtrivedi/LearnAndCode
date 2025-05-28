@@ -1,6 +1,7 @@
 ﻿using InventoryManagement.Context;
 using InventoryManagement.Models;
 using InventoryManagement.Services;
+using InventoryManagement.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,18 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Utils
 {
-    public static class ProductInputHelper
+    public class ProductInputHelper : IProductInputHelper
     {
-        public static Product GetInputFromUser(ICategoryService categoryService, ISupplierService supplierService, bool isUpdate = false)
+        private readonly ICategoryInputHelper _categoryInputHelper;
+        private readonly ISupplierInputHelper _supplierInputHelper;
+
+        public ProductInputHelper(ICategoryInputHelper categoryInputHelper, ISupplierInputHelper supplierInputHelper)
+        {
+            _categoryInputHelper = categoryInputHelper;
+            _supplierInputHelper = supplierInputHelper;
+        }
+
+        public Product GetInputFromUser(ICategoryService categoryService, ISupplierService supplierService, bool isUpdate = false)
         {
             int id;
             if (isUpdate)
@@ -34,7 +44,7 @@ namespace InventoryManagement.Utils
             Console.WriteLine("Enter Price");
             decimal price = decimal.Parse(Console.ReadLine());
 
-            Category category = CategoryInputHelper.GetCategoryFromUser(categoryService);
+            Category category = _categoryInputHelper.GetCategoryFromUser(categoryService);
 
             Supplier supplierObj;
 
@@ -61,7 +71,7 @@ namespace InventoryManagement.Utils
             }
             else
             {
-                supplierObj = SupplierInputHelper.GetInputFromUser();
+                supplierObj = _supplierInputHelper.GetInputFromUser();
             }
 
 

@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Models;
+using InventoryManagement.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace InventoryManagement.Utils
 {
-    public static class SupplierInputHelper
+    public class SupplierInputHelper : ISupplierInputHelper
     {
-        public static Supplier GetInputFromUser(bool isUpdate = false, Supplier existingSupplier = null)
+        public Supplier GetInputFromUser(bool isUpdate = false, Supplier existingSupplier = null)
         {
             var supplier = new Supplier();
 
