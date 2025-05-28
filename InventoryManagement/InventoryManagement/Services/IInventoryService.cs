@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InventoryManagement.Models;
+using InventoryManagement.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +10,10 @@ namespace InventoryManagement.Services
 {
     public interface IInventoryService
     {
-        void AddInventory();
+        OperationResult AddInventory(Product product);
         void ViewAllInventories();
         void UpdateInventory();
+        void CheckLowStock();
     }
 
 }

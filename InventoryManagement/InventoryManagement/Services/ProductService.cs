@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Models;
+﻿using InventoryManagement.Exceptions;
+using InventoryManagement.Models;
 using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
 using System;
@@ -15,11 +16,13 @@ namespace InventoryManagement.Services
        private readonly IProductRepository _productRepository;
        private readonly ICategoryService _categoryService;
        private readonly ISupplierService _supplierService;
+        private readonly IInventoryService _inventoryService;
 
-        public ProductService(IProductRepository productRepository, ICategoryService categoryService) 
+        public ProductService(IProductRepository productRepository, ICategoryService categoryService, IInventoryService inventoryService) 
         {
             _productRepository = productRepository;
-            _categoryService= categoryService;
+            _categoryService = categoryService;
+            _inventoryService = inventoryService;
         }
         public void AddProduct()
         {
@@ -27,6 +30,8 @@ namespace InventoryManagement.Services
             Product product = ProductInputHelper.GetInputFromUser(_categoryService,_supplierService);
 
             OperationResult result = _productRepository.AddProduct(product);
+            
+            OperationResult inventoryResult = _inventoryService.AddInventory(product);
 
             if (result.IsSuccess)
             {
@@ -35,6 +40,20 @@ namespace InventoryManagement.Services
             else
             {
                 Console.WriteLine($"Failed to add product : {result.ErrorMessage}");
+            }
+        }
+
+        public void AddMultipleProduct()
+        {
+            while(true)
+            {
+                AddProduct();
+                Console.Write("Do you want add another Product? (yes/no)");
+                string exit = Console.ReadLine();
+                if (exit!="yes" )
+                {
+                    break;
+                }
             }
         }
 
@@ -60,9 +79,14 @@ namespace InventoryManagement.Services
             return products;
         }
 
-        public Product GetProductById(int id)
+        public Product GetProductById(int productId)
         {
-            Product product = _productRepository.GetProductById(id);
+            Product product = _productRepository.GetProductById(productId);
+
+            if(product == null)
+            {
+                throw new ProductNotFoundException(productId);
+            }
 
             return product;
         }
@@ -73,6 +97,8 @@ namespace InventoryManagement.Services
             Product product = ProductInputHelper.GetInputFromUser(_categoryService,_supplierService,isUpdate:true);
 
             Product updatedProduct = _productRepository.UpdateProduct(product);
+
+            //OperationResult inventoryResult = _inventoryService.UpdateInventory(product);
 
             Console.WriteLine("Product Updated Successfully");
 

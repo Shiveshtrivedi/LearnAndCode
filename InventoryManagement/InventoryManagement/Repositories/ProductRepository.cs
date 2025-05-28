@@ -11,14 +11,20 @@ namespace InventoryManagement.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        public Product FindProduct(int id)
+
+        public IEnumerable<Product> GetAllProducts()
         {
-            Product product = ProductDb.ProductData.FirstOrDefault(products => products.ProductId == id);
-            return product!;
+            return ProductDb.ProductData;
+        }
+
+        public Product GetProductById(int productId)
+        {
+            Product product = ProductDb.ProductData.FirstOrDefault(products => products.ProductId == productId);
+            return product;
         }
         public OperationResult AddProduct(Product product)
         {
-            var existingProduct = FindProduct(product.ProductId); 
+            var existingProduct = GetProductById(product.ProductId); 
 
             if (existingProduct != null)
             {
@@ -29,9 +35,10 @@ namespace InventoryManagement.Repositories
             return new OperationResult { IsSuccess = true };
         }
 
+
         public OperationResult DeleteProduct(int productId)
         {
-           Product product = FindProduct(productId);
+           Product product = GetProductById(productId);
             if (product != null) 
             { 
                 ProductDb.ProductData.Remove(product);
@@ -41,20 +48,9 @@ namespace InventoryManagement.Repositories
             return new OperationResult { IsSuccess = false , ErrorMessage="Product Not Found" };
         }
 
-        public IEnumerable<Product> GetAllProducts()
-        {
-           return ProductDb.ProductData;
-        }
-
-        public Product GetProductById(int productId)
-        {
-            Product product = FindProduct(productId);
-            return product;
-        }
-
         public Product UpdateProduct(Product product)
         {
-            Product existingProduct = FindProduct(product.ProductId);
+            Product existingProduct = GetProductById(product.ProductId);
 
             if (existingProduct != null) 
             {

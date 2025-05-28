@@ -13,37 +13,28 @@ namespace InventoryManagement.Services
     {
         private readonly IInventoryRepository _inventoryRepository;
         private readonly IProductRepository _productRepository;
-
+        private const int LowStockThreshold = 10;
         public InventoryService(IInventoryRepository inventoryRepository, IProductRepository productRepository)
         {
             _inventoryRepository = inventoryRepository;
             _productRepository = productRepository;
         }
-        public void AddInventory()
+        public OperationResult AddInventory(Product product)
         {
-            Console.WriteLine("Enter Product Id:");
-            int productId = int.Parse(Console.ReadLine());
-
-            var product = _productRepository.GetProductById(productId);
-            if (product == null)
+            if(product == null)
             {
-                Console.WriteLine("Product does not exist.");
-                return;
+                return new OperationResult { ErrorMessage = "Product not Found"};
             }
-
-            Console.WriteLine("Enter Quantity:");
-            int quantity = int.Parse(Console.ReadLine());
 
             var inventory = new Inventory
             {
                 InventoryId = IdGenerator.GetNextId(),
-                ProductId = productId,
+                ProductId = product.ProductId,
                 Product = product,
-                QuantityAvailable = quantity
+                QuantityAvailable = product.QuantityInStock,
             };
 
-            var result = _inventoryRepository.AddInventory(inventory);
-            Console.WriteLine(result.IsSuccess ? "Inventory added successfully." : $"Error: {result.ErrorMessage}");
+            return _inventoryRepository.AddInventory(inventory);
         }
 
         public void UpdateInventory()
@@ -65,6 +56,28 @@ namespace InventoryManagement.Services
             {
                 Console.WriteLine($"InventoryId: {inv.InventoryId}, Product: {inv.Product?.ProductName}, Quantity: {inv.QuantityAvailable}");
             }
+        }
+
+        public void CheckLowStock()
+        {
+            IEnumerable<Product> products = _productRepository.GetAllProducts();
+
+            IEnumerable<Product> lowStockItems = products.Where(product => product.QuantityInStock < LowStockThreshold).ToList();
+
+            if(lowStockItems.Any())
+            {
+                Console.WriteLine("Low Stock Alert !!!");
+                foreach(Product item in lowStockItems)
+                {
+                    Console.WriteLine($"Product ID : {item.ProductId}, Name : {item.ProductName}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("All product have sufficient stock");
+            }
+
+
         }
     }
 }

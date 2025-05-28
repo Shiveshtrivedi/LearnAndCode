@@ -13,6 +13,7 @@ namespace InventoryManagement.Services
         Product GetProductById(int id);
         IEnumerable<Product> GetAllProducts();
         void AddProduct();
+        void AddMultipleProduct();
         void UpdateProduct();
         void DeleteProduct(int productId);
 

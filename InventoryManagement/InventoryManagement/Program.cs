@@ -12,9 +12,9 @@ namespace InventoryManagement
             IProductRepository productRepository = new ProductRepository();
             ICategoryRepository categoryRepository = new CategoryRepository();
             ICategoryService categoryService = new CategoryService(categoryRepository);
-            IProductService productService = new ProductService(productRepository,categoryService);
             IInventoryRepository inventoryRepository = new InventoryRepository();
             IInventoryService inventoryService = new InventoryService(inventoryRepository, productRepository);
+            IProductService productService = new ProductService(productRepository,categoryService,inventoryService);
 
             bool exit = false;
 
@@ -22,14 +22,15 @@ namespace InventoryManagement
             {
                 Console.WriteLine("\n==== Product Management Menu ====");
                 Console.WriteLine("1. Add Product");
-                Console.WriteLine("2. View All Products");
-                Console.WriteLine("3. Get Product By ID");
-                Console.WriteLine("4. Update Product");
-                Console.WriteLine("5. Delete Product");
-                Console.WriteLine("6. Add Inventory");
-                Console.WriteLine("7. Update Inventory");
-                Console.WriteLine("8. View All Inventory");
-                Console.WriteLine("9. Exit");
+                Console.WriteLine("2. Add Multiple Product");
+                Console.WriteLine("3. View All Products");
+                Console.WriteLine("4. Get Product By ID");
+                Console.WriteLine("5. Update Product");
+                Console.WriteLine("6. Delete Product");
+                Console.WriteLine("7.  Check Low Stock Alert");
+                Console.WriteLine("8. Update Inventory");
+                Console.WriteLine("9. View All Inventory");
+                Console.WriteLine("10. Exit");
                 Console.Write("Enter your choice: ");
 
                 string input = Console.ReadLine()!;
@@ -41,6 +42,10 @@ namespace InventoryManagement
                         break;
 
                     case "2":
+                        productService.AddMultipleProduct();
+                        break;
+
+                    case "3":
                         var allProducts = productService.GetAllProducts();
                         foreach (var product in allProducts)
                         {
@@ -48,7 +53,7 @@ namespace InventoryManagement
                         }
                         break;
 
-                    case "3":
+                    case "4":
                         Console.Write("Enter Product ID: ");
                         int getId = int.Parse(Console.ReadLine());
                         var productById = productService.GetProductById(getId);
@@ -58,30 +63,30 @@ namespace InventoryManagement
                             Console.WriteLine("Product not found.");
                         break;
 
-                    case "4":
+                    case "5":
                         productService.UpdateProduct();
                         break;
 
-                    case "5":
+                    case "6":
                         Console.Write("Enter Product ID to delete: ");
                         int deleteId = int.Parse(Console.ReadLine());
                         productService.DeleteProduct(deleteId);
                         break;
                         
-                    case "6":
-                        inventoryService.AddInventory();
-                        break;
-                        
                     case "7":
-                        inventoryService.UpdateInventory();
+                        inventoryService.CheckLowStock();
                         break;
                         
                     case "8":
+                        inventoryService.UpdateInventory();
+                        break;
+                        
+                    case "9":
                         inventoryService.ViewAllInventories();
                         break;
 
 
-                    case "9":
+                    case "10":
                         exit = true;
                         Console.WriteLine("Exiting...");
                         break;

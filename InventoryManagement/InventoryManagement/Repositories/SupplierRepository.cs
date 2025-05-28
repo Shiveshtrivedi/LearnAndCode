@@ -38,7 +38,7 @@ namespace InventoryManagement.Repositories
 
         public Supplier GetSupplierById(int supplierId)
         {
-            Supplier existingSupplier = SupplierDb.SupplierData.FirstOrDefault(s => s.SupplierId == supplierId)!;
+            Supplier existingSupplier = SupplierDb.SupplierData.FirstOrDefault(s => s.SupplierId == supplierId);
             return existingSupplier;
         }
     }

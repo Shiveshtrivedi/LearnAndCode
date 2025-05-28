@@ -24,7 +24,8 @@ namespace InventoryManagement.Utils
             {
                 id = IdGenerator.GetNextId();
             }
-                Console.WriteLine("Enter Product Name");
+
+            Console.WriteLine("Enter Product Name");
             string productName = Console.ReadLine();
             Console.WriteLine("Enter Product Description");
             string productDescription = Console.ReadLine();
