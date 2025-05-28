@@ -33,32 +33,36 @@ namespace InventoryManagement.Utils
             Console.WriteLine("Enter Price");
             decimal price = decimal.Parse(Console.ReadLine());
 
-            Console.WriteLine("Availabel categories");
+            Category category = CategoryInputHelper.GetCategoryFromUser(categoryService);
 
-            foreach(var cat in categoryService.GetAllCategories())
+            Supplier supplierObj;
+
+            Console.WriteLine("Press (1) for Select an existing supplier or (2) Add new supplier? ");
+            string supplierChoice = Console.ReadLine();
+
+            if (supplierChoice == "1")
             {
-                Console.WriteLine($"{cat.CategoryId} : {cat.CategoryName}");
+                Console.WriteLine("Enter Supplier Id:");
+                if (int.TryParse(Console.ReadLine(), out int supplierId))
+                {
+                    supplierObj = SupplierDb.SupplierData.FirstOrDefault(s => s.SupplierId == supplierId);
+                    if (supplierObj == null)
+                    {
+                        Console.WriteLine("Invalid supplier, assigning default.");
+                        supplierObj = new Supplier { SupplierId = 0, SupplierName = "Unknown" };
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input, assigning default supplier.");
+                    supplierObj = new Supplier { SupplierId = 0, SupplierName = "Unknown" };
+                }
+            }
+            else
+            {
+                supplierObj = SupplierInputHelper.GetInputFromUser();
             }
 
-            Console.WriteLine("Enter Category Id:");
-            int categoryId = int.Parse(Console.ReadLine());
-
-            var category = categoryService.GetCategoryById(categoryId);
-            if (category == null)
-            {
-                Console.WriteLine("Invalid category, assigning default category.");
-                category = new Category { CategoryId = 0, CategoryName = "Uncategorized" };
-            }
-
-            Console.WriteLine("Enter Supplier Id:");
-            int supplierId = int.Parse(Console.ReadLine());
-
-            var supplierObj = SupplierDb.SupplierData.FirstOrDefault(s => s.SupplierId == supplierId);
-            if (supplierObj == null)
-            {
-                Console.WriteLine("Invalid supplier, assigning default.");
-                supplierObj = new Supplier { SupplierId = 0, SupplierName = "Unknown" };
-            }
 
             var product = new Product
             {

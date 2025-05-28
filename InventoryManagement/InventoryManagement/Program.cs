@@ -13,6 +13,8 @@ namespace InventoryManagement
             ICategoryRepository categoryRepository = new CategoryRepository();
             ICategoryService categoryService = new CategoryService(categoryRepository);
             IProductService productService = new ProductService(productRepository,categoryService);
+            IInventoryRepository inventoryRepository = new InventoryRepository();
+            IInventoryService inventoryService = new InventoryService(inventoryRepository, productRepository);
 
             bool exit = false;
 
@@ -24,10 +26,13 @@ namespace InventoryManagement
                 Console.WriteLine("3. Get Product By ID");
                 Console.WriteLine("4. Update Product");
                 Console.WriteLine("5. Delete Product");
-                Console.WriteLine("6. Exit");
+                Console.WriteLine("6. Add Inventory");
+                Console.WriteLine("7. Update Inventory");
+                Console.WriteLine("8. View All Inventory");
+                Console.WriteLine("9. Exit");
                 Console.Write("Enter your choice: ");
 
-                string input = Console.ReadLine();
+                string input = Console.ReadLine()!;
 
                 switch (input)
                 {
@@ -62,8 +67,21 @@ namespace InventoryManagement
                         int deleteId = int.Parse(Console.ReadLine());
                         productService.DeleteProduct(deleteId);
                         break;
-
+                        
                     case "6":
+                        inventoryService.AddInventory();
+                        break;
+                        
+                    case "7":
+                        inventoryService.UpdateInventory();
+                        break;
+                        
+                    case "8":
+                        inventoryService.ViewAllInventories();
+                        break;
+
+
+                    case "9":
                         exit = true;
                         Console.WriteLine("Exiting...");
                         break;

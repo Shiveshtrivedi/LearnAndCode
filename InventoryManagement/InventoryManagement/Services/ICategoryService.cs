@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Models;
+using InventoryManagement.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace InventoryManagement.Services
 {
     public interface ICategoryService
     {
-        void AddCategory(Category category);
+        OperationResult AddCategory(Category category);
         void DeleteCategory(int categoryId);
         IEnumerable<Category> GetAllCategories();
         Category GetCategoryById(int categoryId);

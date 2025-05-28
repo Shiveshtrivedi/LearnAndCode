@@ -1,5 +1,6 @@
 ﻿using InventoryManagement.Models;
 using InventoryManagement.Repositories;
+using InventoryManagement.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,18 +18,11 @@ namespace InventoryManagement.Services
             _categoryRepository = categoryRepository;
         }
 
-        public void AddCategory(Category category)
+        public OperationResult AddCategory(Category category)
         {
             var result = _categoryRepository.AddCategory(category);
 
-            if (result.IsSuccess)
-            {
-                Console.WriteLine("Category added successfully.");
-            }
-            else
-            {
-                Console.WriteLine($"Failed to add category: {result.ErrorMessage}");
-            }
+            return result;
         }
 
         public void DeleteCategory(int categoryId)

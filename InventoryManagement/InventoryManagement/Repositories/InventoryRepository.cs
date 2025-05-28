@@ -11,6 +11,11 @@ namespace InventoryManagement.Repositories
 {
     public class InventoryRepository : IInventoryRepository
     {
+        public Inventory GetInventoryByProductId(int productId)
+        {
+            return InventoryDb.InventoryData.FirstOrDefault(i => i.ProductId == productId);
+        }
+
         public OperationResult AddInventory(Inventory inventory)
         {
             var existing = GetInventoryByProductId(inventory.ProductId);
@@ -21,11 +26,6 @@ namespace InventoryManagement.Repositories
 
             InventoryDb.InventoryData.Add(inventory);
             return new OperationResult { IsSuccess = true };
-        }
-
-        public Inventory GetInventoryByProductId(int productId)
-        {
-            return InventoryDb.InventoryData.FirstOrDefault(i => i.ProductId == productId);
         }
 
         public IEnumerable<Inventory> GetAllInventories()

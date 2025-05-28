@@ -14,7 +14,7 @@ namespace InventoryManagement.Repositories
         public Product FindProduct(int id)
         {
             Product product = ProductDb.ProductData.FirstOrDefault(products => products.ProductId == id);
-            return product;
+            return product!;
         }
         public OperationResult AddProduct(Product product)
         {
@@ -65,7 +65,7 @@ namespace InventoryManagement.Repositories
             }
 
 
-            return existingProduct;
+            return existingProduct!;
         }
 
         
