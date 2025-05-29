@@ -30,7 +30,7 @@ namespace InventoryManagement.Services
         {
             var result = _categoryRepository.DeleteCategory(categoryId);
 
-            if (result.IsSuccess)
+            if (!result.IsSuccess)
             {
                 throw new OperationFailedException("Delete Category", result.ErrorMessage);
             }

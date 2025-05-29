@@ -1,4 +1,5 @@
 ﻿using InventoryManagement.Context;
+using InventoryManagement.Enum;
 using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
 using InventoryManagement.Utils;
@@ -14,18 +15,16 @@ namespace InventoryManagement.Repositories
     {
         public OperationResult AddSupplier(Supplier supplier)
         {
-            try
-            {
-                var existingSupplier = GetSupplierById(supplier.SupplierId);
+            var existingSupplier = SupplierDb.SupplierData.Any(suppliers => suppliers.SupplierId == supplier.SupplierId);
 
-                SupplierDb.SupplierData.Add(supplier);
-                return new OperationResult { IsSuccess = true };
-            }
-            catch (Exception ex)
+            if (existingSupplier)
             {
-                return new OperationResult { IsSuccess = false, ErrorMessage = "Supplier already exists" };
+                return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
             }
 
+            SupplierDb.SupplierData.Add(supplier);
+
+            return OperationResult.Success();
         }
 
         public OperationResult DeleteSupplier(int supplierId)
@@ -34,11 +33,11 @@ namespace InventoryManagement.Repositories
             {
                 var supplier = GetSupplierById(supplierId);
                 SupplierDb.SupplierData.Remove(supplier);
-                return new OperationResult { IsSuccess = true };
+                return OperationResult.Success();
             }
             catch (Exception ex) 
             {
-                return new OperationResult { IsSuccess = false, ErrorMessage = $"Supplier not found {ex.Message}" };
+                return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
             }
         }
 

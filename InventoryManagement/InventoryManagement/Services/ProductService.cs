@@ -35,10 +35,10 @@ namespace InventoryManagement.Services
 
             OperationResult result = _productRepository.AddProduct(product);
             
-            OperationResult inventoryResult = _inventoryService.AddInventory(product);
 
             if (result.IsSuccess)
             {
+                OperationResult inventoryResult = _inventoryService.AddInventory(product);
                 Console.WriteLine("Product added successfully");
             }
             else
@@ -83,11 +83,6 @@ namespace InventoryManagement.Services
         public Product GetProductById(int productId)
         {
             Product product = _productRepository.GetProductById(productId);
-
-            if(product == null)
-            {
-                throw new ProductNotFoundException(productId);
-            }
 
             return product;
         }

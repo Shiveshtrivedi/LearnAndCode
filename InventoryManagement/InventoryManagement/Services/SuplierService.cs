@@ -2,6 +2,7 @@
 using InventoryManagement.Models;
 using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
+using InventoryManagement.Utils.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,28 +14,23 @@ namespace InventoryManagement.Services
     public class SuplierService : ISupplierService
     {
         private readonly ISupplierRepository _supplierRepository;
+        private readonly ISupplierInputHelper _supplierInputHelper;
 
-        public SuplierService(ISupplierRepository supplierRepository)
+        public SuplierService(ISupplierRepository supplierRepository, ISupplierInputHelper supplierInputHelper)
         {
             _supplierRepository = supplierRepository;
+            _supplierInputHelper = supplierInputHelper;
         }
 
         public void AddSupplier()
         {
-            Console.WriteLine("Enter Supplier Name:");
-            string name = Console.ReadLine();
-
-            Console.WriteLine("Enter Contact Number:");
-            string contact = Console.ReadLine();
-
-            Console.WriteLine("Enter Email:");
-            string email = Console.ReadLine();
+            Supplier supplierInput = _supplierInputHelper.GetInputFromUser();
 
             var supplier = new Supplier
             {
                 SupplierId = IdGenerator.GetNextId(),
-                SupplierName = name,
-                ContactNumber = contact,
+                SupplierName = supplierInput.SupplierName,
+                ContactNumber = supplierInput.ContactNumber,
             };
 
             var result = _supplierRepository.AddSupplier(supplier);
@@ -55,7 +51,10 @@ namespace InventoryManagement.Services
             Console.WriteLine("-* Suppliers List *-");
             foreach (var supplier in suppliers)
             {
-                Console.WriteLine($"ID: {supplier.SupplierId}, Name: {supplier.SupplierName}, Contact: {supplier.ContactNumber}");
+                if(!suppliers.Any())
+                {
+                    Console.WriteLine($"ID: {supplier.SupplierId}, Name: {supplier.SupplierName}, Contact: {supplier.ContactNumber}");
+                }
             }
         }
 

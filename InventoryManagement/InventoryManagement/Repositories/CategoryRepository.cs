@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InventoryManagement.Enum;
 
 namespace InventoryManagement.Repositories
 {
@@ -14,18 +15,15 @@ namespace InventoryManagement.Repositories
     {
         public OperationResult AddCategory(Category category)
         {
-            try 
-            {
-                var existingCategory = GetCategoryById(category.CategoryId);
+            var exisitngCategory = CategoryDb.CategoryData.Any(categories => categories.CategoryId == category.CategoryId);
 
-                CategoryDb.CategoryData.Add(category);
-
-                return new OperationResult { IsSuccess = true };
-            }
-            catch 
+            if(exisitngCategory)
             {
-                return new OperationResult { IsSuccess = false, ErrorMessage = "Product already exist" };
+                return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
             }
+
+            CategoryDb.CategoryData.Add(category);
+            return OperationResult.Success();
         }
 
         public OperationResult DeleteCategory(int categoryId)
@@ -34,12 +32,12 @@ namespace InventoryManagement.Repositories
             {
                 Category existingCategory = GetCategoryById(categoryId);
                 CategoryDb.CategoryData.Remove(existingCategory);
-                
-                return new OperationResult { IsSuccess = true };
+
+                return OperationResult.Success();           
             }
             catch (Exception ex)
             {
-                return new OperationResult { ErrorMessage = $"No Category Exist {ex.Message}" };
+                return OperationResult.Fail($"No Category Exist ${ex.Message}", ErrorCode.NotFound);
             }
         }
 

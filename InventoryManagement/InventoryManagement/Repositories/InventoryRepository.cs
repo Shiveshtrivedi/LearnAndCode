@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InventoryManagement.Enum;
 
 namespace InventoryManagement.Repositories
 {
@@ -26,17 +27,15 @@ namespace InventoryManagement.Repositories
 
         public OperationResult AddInventory(Inventory inventory)
         {
-            try
-            {
-                var existing = GetInventoryByProductId(inventory.ProductId);
+            Inventory existingInventory = InventoryDb.InventoryData.FirstOrDefault(inventories => inventories.ProductId == inventory.ProductId);
 
-                InventoryDb.InventoryData.Add(inventory);
-                return new OperationResult { IsSuccess = true };
-            }
-            catch (Exception ex)
+            if (existingInventory != null)
             {
-                return new OperationResult { IsSuccess = false, ErrorMessage = $"Inventory already exists for this product. {ex.Message}" };
+                return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
             }
+
+            InventoryDb.InventoryData.Add(inventory);
+            return OperationResult.Success();
         }
 
         public IEnumerable<Inventory> GetAllInventories()
@@ -49,11 +48,11 @@ namespace InventoryManagement.Repositories
             var inventory = GetInventoryByProductId(productId);
             if (inventory == null)
             {
-                return new OperationResult { IsSuccess = false, ErrorMessage = "Inventory not found." };
+                return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
             }
 
             inventory.QuantityAvailable = newQuantity;
-            return new OperationResult { IsSuccess = true };
+            return OperationResult.Success();
         }
     }
 

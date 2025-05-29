@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using InventoryManagement.Context;
 using InventoryManagement.Utils;
 using InventoryManagement.Exceptions;
+using InventoryManagement.Enum;
 
 namespace InventoryManagement.Repositories
 {
@@ -31,18 +32,16 @@ namespace InventoryManagement.Repositories
         }
         public OperationResult AddProduct(Product product)
         {
-            try
-            {
-                var existingProduct = GetProductById(product.ProductId);
+            var existingProduct = ProductDb.ProductData.FirstOrDefault(products => products.ProductId == product.ProductId);
 
-                ProductDb.ProductData.Add(product);
-
-                return new OperationResult { IsSuccess = true };
-            }
-            catch (Exception ex) 
+            if (existingProduct != null)
             {
-                return new OperationResult { IsSuccess = false, ErrorMessage = "Supplier already exists" };
+                return OperationResult.Fail($"Product with ID {product.ProductId} already exists", ErrorCode.AlreadyExists);
             }
+
+            ProductDb.ProductData.Add(product);
+
+            return OperationResult.Success();
         }
 
 
@@ -50,13 +49,18 @@ namespace InventoryManagement.Repositories
         {
             try
             {
-                Product product = GetProductById(productId);
+                Product product = ProductDb.ProductData.FirstOrDefault(products => products.ProductId == productId);
+
+                if (product == null)
+                {
+                    return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
+                }
                 ProductDb.ProductData.Remove(product);
-                return new OperationResult { IsSuccess = true };
+                return OperationResult.Success();
             }
             catch (Exception ex)
             {
-                return new OperationResult { IsSuccess = false , ErrorMessage= $"Product Not Found {ex.Message}" };
+                return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
             }
 
         }
@@ -65,14 +69,10 @@ namespace InventoryManagement.Repositories
         {
             Product existingProduct = GetProductById(product.ProductId);
 
-            if (existingProduct != null) 
-            {
-                existingProduct.ProductName = product.ProductName;
-                existingProduct.ProductDescription = product.ProductDescription;
-                existingProduct.QuantityInStock = product.QuantityInStock;
-                existingProduct.Price = product.Price;
-            }
-
+            existingProduct.ProductName = product.ProductName;
+            existingProduct.ProductDescription = product.ProductDescription;
+            existingProduct.QuantityInStock = product.QuantityInStock;
+            existingProduct.Price = product.Price;
 
             return existingProduct!;
         }
