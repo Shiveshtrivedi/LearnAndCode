@@ -37,7 +37,7 @@ namespace InventoryManagement.Repositories
             }
             catch (Exception ex) 
             {
-                return OperationResult.Fail("Supplier already exists.", ErrorCode.AlreadyExists);
+                return OperationResult.Fail(ex.Message, ErrorCode.AlreadyExists);
             }
         }
 

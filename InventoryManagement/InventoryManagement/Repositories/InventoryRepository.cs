@@ -52,6 +52,7 @@ namespace InventoryManagement.Repositories
             }
 
             inventory.QuantityAvailable = newQuantity;
+
             return OperationResult.Success();
         }
     }

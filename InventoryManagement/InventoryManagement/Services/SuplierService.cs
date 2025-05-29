@@ -22,7 +22,7 @@ namespace InventoryManagement.Services
             _supplierInputHelper = supplierInputHelper;
         }
 
-        public void AddSupplier()
+        public void RegisterSupplier()
         {
             Supplier supplierInput = _supplierInputHelper.GetInputFromUser();
 
@@ -58,7 +58,7 @@ namespace InventoryManagement.Services
             }
         }
 
-        public void DeleteSupplier()
+        public void RemoveSupplier()
         {
             Console.WriteLine("Enter Supplier ID to delete:");
             if (!int.TryParse(Console.ReadLine(), out int supplierId))

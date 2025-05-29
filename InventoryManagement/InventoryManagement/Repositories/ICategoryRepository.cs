@@ -13,7 +13,6 @@ namespace InventoryManagement.Repositories
         IEnumerable<Category> GetAllCategories();
         Category GetCategoryById(int categoryId);
         OperationResult AddCategory(Category category);
-        void UpdateCategory();
         OperationResult DeleteCategory(int categoryId);
 
     }

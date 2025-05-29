@@ -20,7 +20,7 @@ namespace InventoryManagement.Services
             _inventoryRepository = inventoryRepository;
             _productRepository = productRepository;
         }
-        public OperationResult AddInventory(Product product)
+        public OperationResult RegisterInventory(Product product)
         {
             if(product == null)
             {
@@ -38,17 +38,32 @@ namespace InventoryManagement.Services
             return _inventoryRepository.AddInventory(inventory);
         }
 
-        public void UpdateInventory()
+        public void UpdateInventory(Product product = null)
         {
-            Console.WriteLine("Enter Product Id:");
-            if (!int.TryParse(Console.ReadLine(), out int productId))
-                throw new InventoryException("Invalid Product ID input.");
+            int productId; 
+            int newQuantity;
+            if (product == null)
+            {
+                Console.WriteLine("Enter Product Id:");
+                if (!int.TryParse(Console.ReadLine(), out productId))
+                    throw new InventoryException("Invalid Product ID input.");
 
-            Console.WriteLine("Enter New Quantity:");
-            if (!int.TryParse(Console.ReadLine(), out int newQuantity))
-                throw new InventoryException("Invalid quantity input.");
+                Console.WriteLine("Enter New Quantity:");
+                if (!int.TryParse(Console.ReadLine(), out newQuantity))
+                    throw new InventoryException("Invalid quantity input.");
+
+            }
+
+            else
+            {
+                productId = product.ProductId;
+                newQuantity = product.QuantityInStock;
+            }
 
             var result = _inventoryRepository.UpdateInventory(productId, newQuantity);
+            var fetchProduct = _productRepository.GetProductById(productId);
+            fetchProduct.QuantityInStock = newQuantity;
+            var updateProduct = _productRepository.UpdateProduct(fetchProduct);
 
             if (!result.IsSuccess)
                 throw new OperationFailedException("UpdateInventory", result.ErrorMessage);
@@ -56,7 +71,7 @@ namespace InventoryManagement.Services
             Console.WriteLine(result.IsSuccess ? "Inventory updated." : $"Error: {result.ErrorMessage}");
         }
 
-        public void ViewAllInventories()
+        public void DisplayAllInventories()
         {
             var inventories = _inventoryRepository.GetAllInventories();
             foreach (var inv in inventories)
@@ -65,7 +80,7 @@ namespace InventoryManagement.Services
             }
         }
 
-        public void CheckLowStock()
+        public void AlertIfLowStock()
         {
             IEnumerable<Product> products = _productRepository.GetAllProducts();
 

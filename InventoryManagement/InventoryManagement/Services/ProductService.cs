@@ -28,7 +28,7 @@ namespace InventoryManagement.Services
             _inventoryService = inventoryService;
             _productInputHelper = productInputHelper;
         }
-        public void AddProduct()
+        public void RegisterProduct()
         {
 
             Product product = _productInputHelper.GetInputFromUser(_categoryService,_supplierService);
@@ -38,7 +38,7 @@ namespace InventoryManagement.Services
 
             if (result.IsSuccess)
             {
-                OperationResult inventoryResult = _inventoryService.AddInventory(product);
+                OperationResult inventoryResult = _inventoryService.RegisterInventory(product);
                 Console.WriteLine("Product added successfully");
             }
             else
@@ -47,11 +47,11 @@ namespace InventoryManagement.Services
             }
         }
 
-        public void AddMultipleProduct()
+        public void RegisterMultipleProduct()
         {
             while(true)
             {
-                AddProduct();
+                RegisterProduct();
                 Console.Write("Do you want add another Product? (yes/no)");
                 string exit = Console.ReadLine();
                 if (exit!="yes" )
@@ -61,7 +61,7 @@ namespace InventoryManagement.Services
             }
         }
 
-        public void DeleteProduct(int productId)
+        public void RemoveProduct(int productId)
         {
             OperationResult result = _productRepository.DeleteProduct(productId);
 
@@ -87,14 +87,14 @@ namespace InventoryManagement.Services
             return product;
         }
 
-        public void UpdateProduct()
+        public void UpdateProductDetails()
         {
             
             Product product = _productInputHelper.GetInputFromUser(_categoryService,_supplierService,isUpdate:true);
 
             Product updatedProduct = _productRepository.UpdateProduct(product);
 
-            //OperationResult inventoryResult = _inventoryService.UpdateInventory(product);
+             _inventoryService.UpdateInventory(updatedProduct);
 
             Console.WriteLine("Product Updated Successfully");
 

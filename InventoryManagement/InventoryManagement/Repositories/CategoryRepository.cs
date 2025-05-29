@@ -37,7 +37,7 @@ namespace InventoryManagement.Repositories
             }
             catch (Exception ex)
             {
-                return OperationResult.Fail($"No Category Exist ${ex.Message}", ErrorCode.NotFound);
+                return OperationResult.Fail(ex.Message, ErrorCode.NotFound);
             }
         }
 

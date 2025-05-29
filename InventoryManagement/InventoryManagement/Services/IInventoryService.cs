@@ -10,10 +10,10 @@ namespace InventoryManagement.Services
 {
     public interface IInventoryService
     {
-        OperationResult AddInventory(Product product);
-        void ViewAllInventories();
-        void UpdateInventory();
-        void CheckLowStock();
+        OperationResult RegisterInventory(Product product);
+        void DisplayAllInventories();
+        void UpdateInventory(Product product = null);
+        void AlertIfLowStock();
     }
 
 }

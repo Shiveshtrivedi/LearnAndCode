@@ -8,8 +8,8 @@ namespace InventoryManagement.Services
 {
     public interface ISupplierService
     {
-        void AddSupplier();
+        void RegisterSupplier();
         void ViewAllSuppliers();
-        void DeleteSupplier();
+        void RemoveSupplier();
     }
 }

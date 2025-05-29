@@ -12,10 +12,10 @@ namespace InventoryManagement.Services
     {
         Product GetProductById(int id);
         IEnumerable<Product> GetAllProducts();
-        void AddProduct();
-        void AddMultipleProduct();
-        void UpdateProduct();
-        void DeleteProduct(int productId);
+        void RegisterProduct();
+        void RegisterMultipleProduct();
+        void UpdateProductDetails();
+        void RemoveProduct(int productId);
 
     }
 }
