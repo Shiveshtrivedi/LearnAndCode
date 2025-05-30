@@ -86,6 +86,12 @@ namespace InventoryManagement.Services
 
             return product;
         }
+        public Product GetProductByName(string productName)
+        {
+            Product product = _productRepository.GetProductByName(productName);
+
+            return product;
+        }
 
         public void UpdateProductDetails()
         {
@@ -99,5 +105,6 @@ namespace InventoryManagement.Services
             Console.WriteLine("Product Updated Successfully");
 
         }
+
     }
 }

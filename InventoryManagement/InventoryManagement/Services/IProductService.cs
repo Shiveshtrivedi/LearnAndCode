@@ -11,6 +11,7 @@ namespace InventoryManagement.Services
     public interface IProductService
     {
         Product GetProductById(int id);
+        Product GetProductByName(string productName);
         IEnumerable<Product> GetAllProducts();
         void RegisterProduct();
         void RegisterMultipleProduct();

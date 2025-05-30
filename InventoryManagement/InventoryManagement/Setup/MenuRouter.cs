@@ -25,12 +25,13 @@ namespace InventoryManagement.Setup
                 Console.WriteLine("2. Add Multiple Product");
                 Console.WriteLine("3. View All Products");
                 Console.WriteLine("4. Get Product By ID");
-                Console.WriteLine("5. Update Product");
-                Console.WriteLine("6. Delete Product");
-                Console.WriteLine("7. Check Low Stock Alert");
-                Console.WriteLine("8. Update Inventory");
-                Console.WriteLine("9. View All Inventory");
-                Console.WriteLine("10. Exit");
+                Console.WriteLine("5. Get Product By Name");
+                Console.WriteLine("6. Update Product");
+                Console.WriteLine("7. Delete Product");
+                Console.WriteLine("8. Check Low Stock Alert");
+                Console.WriteLine("9. Update Inventory");
+                Console.WriteLine("10. View All Inventory");
+                Console.WriteLine("11. Exit");
                 Console.Write("Enter your choice: ");
 
                 string input = Console.ReadLine()!;
@@ -47,41 +48,59 @@ namespace InventoryManagement.Setup
                             _productService.RegisterMultipleProduct();
                             break;
                         case "3":
-                            var all = _productService.GetAllProducts();
-                            foreach (var p in all)
-                                ProductDisplayHelper.DisplayProduct(p);
+                            var allProduct = _productService.GetAllProducts();
+                            foreach (var product in allProduct)
+                                ProductDisplayHelper.DisplayProduct(product);
                             break;
                         case "4":
                             Console.Write("Enter Product ID: ");
-                            if (int.TryParse(Console.ReadLine(), out int id))
+                            if (int.TryParse(Console.ReadLine(), out int productId))
                             {
-                                var prod = _productService.GetProductById(id);
-                                if (prod != null)
-                                    ProductDisplayHelper.DisplayProduct(prod);
+                                var product = _productService.GetProductById(productId);
+                                if (product != null)
+                                    ProductDisplayHelper.DisplayProduct(product);
                                 else
                                     Console.WriteLine("Product not found.");
                             }
                             else Console.WriteLine("Invalid ID.");
                             break;
                         case "5":
+                            Console.Write("Enter Product Name: ");
+                            string productName = Console.ReadLine();
+
+                            if (!string.IsNullOrWhiteSpace(productName))
+                            {
+                                var product = _productService.GetProductByName(productName); 
+                                if (product != null)
+                                    ProductDisplayHelper.DisplayProduct(product);
+                                else
+                                    Console.WriteLine("Product not found.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Invalid Product Name.");
+                            }
+                            break;
+
+                        case "6":
                             _productService.UpdateProductDetails();
                             break;
-                        case "6":
+                        case "7":
                             Console.Write("Enter Product ID to delete: ");
-                            if (int.TryParse(Console.ReadLine(), out int delId))
-                                _productService.RemoveProduct(delId);
+                            if (int.TryParse(Console.ReadLine(), out int deleteId))
+                                _productService.RemoveProduct(deleteId);
                             else Console.WriteLine("Invalid ID.");
                             break;
-                        case "7":
+                        case "8":
                             _inventoryService.AlertIfLowStock();
                             break;
-                        case "8":
+                        case "9":
                             _inventoryService.UpdateInventory();
                             break;
-                        case "9":
+                        case "10":
                             _inventoryService.DisplayAllInventories();
                             break;
-                        case "10":
+                        case "11":
                             Console.WriteLine("Exiting...");
                             exit = true;
                             break;

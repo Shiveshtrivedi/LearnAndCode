@@ -55,11 +55,5 @@ namespace InventoryManagement.Repositories
 
             return category;
         }
-
-        public void UpdateCategory()
-        {
-            // in-progress
-            throw new NotImplementedException();
-        }
     }
 }

@@ -30,6 +30,18 @@ namespace InventoryManagement.Repositories
 
             return product;
         }
+        
+        public Product GetProductByName(string productName)
+        {
+            Product product = ProductDb.ProductData.FirstOrDefault(products => products.ProductName == productName);
+
+            if (product == null)
+            {
+                return null;
+            }
+
+            return product;
+        }
         public OperationResult AddProduct(Product product)
         {
             var existingProduct = ProductDb.ProductData.FirstOrDefault(products => products.ProductId == product.ProductId);
@@ -77,6 +89,15 @@ namespace InventoryManagement.Repositories
             return existingProduct!;
         }
 
-        
+        public Product UpdateProductQuantity(int productId,int quantity)
+        {
+            Product existingProduct = GetProductById(productId);
+
+            existingProduct.QuantityInStock = quantity;
+
+            return existingProduct!;
+        }
+
+
     }
 }
