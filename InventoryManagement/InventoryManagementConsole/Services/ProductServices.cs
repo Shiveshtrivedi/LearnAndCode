@@ -3,7 +3,7 @@ using InventoryManagementConsole.DTOs;
 
 namespace InventoryManagementConsole.Services
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly HttpClient _client;
 
@@ -14,7 +14,7 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetAllProductsAsync()
         {
-            var products = await _client.GetFromJsonAsync<List<ProductDto>>("api/products");
+            var products = await _client.GetFromJsonAsync<List<ProductDto>>("api/Product");
 
             foreach (var product in products)
             {
@@ -52,7 +52,7 @@ namespace InventoryManagementConsole.Services
                 SupplierId = supplierId
             };
 
-            var response = await _client.PostAsJsonAsync("api/products", newProduct);
+            var response = await _client.PostAsJsonAsync("api/Product", newProduct);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Product added successfully."
@@ -64,7 +64,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter ProductId to update: ");
             int id = int.Parse(Console.ReadLine());
 
-            var product = await _client.GetFromJsonAsync<ProductDto>($"api/products/{id}");
+            var product = await _client.GetFromJsonAsync<ProductDto>($"api/Product/{id}");
 
             if (product == null)
             {
@@ -81,7 +81,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("New Qty: ");
             product.QuantityInStock = int.Parse(Console.ReadLine());
 
-            await _client.PutAsJsonAsync("api/products", new ProductUpdateDto
+            await _client.PutAsJsonAsync("api/Product", new ProductUpdateDto
             {
                 ProductId = product.ProductId,
                 ProductName = product.ProductName,
@@ -100,7 +100,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter ProductId to delete: ");
             int id = int.Parse(Console.ReadLine());
 
-            var response = await _client.DeleteAsync($"api/products/{id}");
+            var response = await _client.DeleteAsync($"api/Product/{id}");
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Deleted successfully."

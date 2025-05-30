@@ -3,7 +3,7 @@ using InventoryManagementConsole.DTOs;
 
 namespace InventoryManagementConsole.Services
 {
-    public class InventoryService
+    public class InventoryService : IInventoryService
     {
         private readonly HttpClient _client;
 
@@ -42,7 +42,7 @@ namespace InventoryManagementConsole.Services
                 QuantityInStock = quantity
             };
 
-            var response = await _client.PostAsJsonAsync("api/inventory/register", product);
+            var response = await _client.PostAsJsonAsync("api/Inventory/register", product);
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Inventory registered successfully."
                 : $"Failed: {await response.Content.ReadAsStringAsync()}");
@@ -56,7 +56,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter new Quantity: ");
             int quantity = int.Parse(Console.ReadLine());
 
-            var response = await _client.PutAsync($"api/inventory/update?productId={productId}&quantity={quantity}", null);
+            var response = await _client.PutAsync($"api/Inventory/update?productId={productId}&quantity={quantity}", null);
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Inventory updated successfully."
                 : $"Failed: {await response.Content.ReadAsStringAsync()}");
@@ -64,7 +64,7 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetAllInventoriesAsync()
         {
-            var inventories = await _client.GetFromJsonAsync<List<InventoryDto>>("api/inventory/all");
+            var inventories = await _client.GetFromJsonAsync<List<InventoryDto>>("api/Inventory/all");
 
             Console.WriteLine("=== All Inventories ===");
             foreach (var inv in inventories)
@@ -75,7 +75,7 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetLowStockItemsAsync()
         {
-            var response = await _client.GetAsync("api/inventory/lowstock");
+            var response = await _client.GetAsync("api/Inventory/lowstock");
 
             if (response.IsSuccessStatusCode)
             {

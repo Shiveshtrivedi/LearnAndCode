@@ -6,7 +6,7 @@ namespace InventoryManagementConsole
     {
         private static readonly HttpClient client = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:7145/") 
+            BaseAddress = new Uri("https://localhost:7048/") 
         };
 
         public static HttpClient GetClient() => client;

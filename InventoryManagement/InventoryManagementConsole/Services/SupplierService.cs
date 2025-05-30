@@ -14,7 +14,7 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetAllSuppliersAsync()
         {
-            var suppliers = await _client.GetFromJsonAsync<List<SupplierDto>>("api/supplier");
+            var suppliers = await _client.GetFromJsonAsync<List<SupplierDto>>("api/Supplier");
 
             Console.WriteLine("=== Suppliers ===");
             foreach (var supplier in suppliers)
@@ -37,7 +37,7 @@ namespace InventoryManagementConsole.Services
                 ContactNumber = contact,
             };
 
-            var response = await _client.PostAsJsonAsync("api/supplier", supplier);
+            var response = await _client.PostAsJsonAsync("api/Supplier", supplier);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Supplier added successfully."
@@ -49,7 +49,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter Supplier ID to delete: ");
             int id = int.Parse(Console.ReadLine());
 
-            var response = await _client.DeleteAsync($"api/supplier/{id}");
+            var response = await _client.DeleteAsync($"api/Supplier/{id}");
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Supplier deleted successfully."

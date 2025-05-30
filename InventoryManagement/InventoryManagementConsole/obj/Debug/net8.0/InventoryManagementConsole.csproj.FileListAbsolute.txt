@@ -1,0 +1,15 @@
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\InventoryManagementConsole.exe
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\InventoryManagementConsole.deps.json
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\InventoryManagementConsole.runtimeconfig.json
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\InventoryManagementConsole.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\InventoryManagementConsole.pdb
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.AssemblyInfoInputs.cache
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.AssemblyInfo.cs
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.csproj.CoreCompileInputs.cache
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.sourcelink.json
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\refint\InventoryManagementConsole.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.pdb
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.genruntimeconfig.cache
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\ref\InventoryManagementConsole.dll

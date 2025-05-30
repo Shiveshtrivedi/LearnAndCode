@@ -3,7 +3,7 @@ using InventoryManagementConsole.DTOs;
 
 namespace InventoryManagementConsole.Services
 {
-    public class CategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly HttpClient _client;
 
@@ -14,7 +14,7 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetAllCategoriesAsync()
         {
-            var categories = await _client.GetFromJsonAsync<List<CategoryDto>>("api/category");
+            var categories = await _client.GetFromJsonAsync<List<CategoryDto>>("api/Category");
 
             Console.WriteLine("=== Categories ===");
             foreach (var category in categories)
@@ -29,7 +29,7 @@ namespace InventoryManagementConsole.Services
             string name = Console.ReadLine();
 
             var category = new CategoryDto { CategoryName = name };
-            var response = await _client.PostAsJsonAsync("api/category", category);
+            var response = await _client.PostAsJsonAsync("api/Category", category);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Category added successfully."
@@ -50,7 +50,7 @@ namespace InventoryManagementConsole.Services
                 CategoryName = newName
             };
 
-            var response = await _client.PutAsJsonAsync($"api/category/{id}", updatedCategory);
+            var response = await _client.PutAsJsonAsync($"api/Category/{id}", updatedCategory);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Category updated successfully."
@@ -62,7 +62,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter category ID to delete: ");
             int id = int.Parse(Console.ReadLine());
 
-            var response = await _client.DeleteAsync($"api/category/{id}");
+            var response = await _client.DeleteAsync($"api/Category/{id}");
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Category deleted successfully."
