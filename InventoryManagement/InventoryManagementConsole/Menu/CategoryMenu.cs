@@ -1,4 +1,5 @@
 ﻿using InventoryManagementConsole.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace InventoryManagementConsole.Menus
 {
@@ -6,7 +7,12 @@ namespace InventoryManagementConsole.Menus
     {
         public static async void Show()
         {
-            var service = new CategoryService();
+            IConfiguration configuration = new ConfigurationBuilder()
+                                                        .AddJsonFile("appsettings.json")
+                                                        .Build();
+
+            IHttpClientFactoryWrapper clientFactoryWrapper = new HttpClientFactory(configuration);
+            var service = new CategoryService(clientFactoryWrapper);
 
             while (true)
             {

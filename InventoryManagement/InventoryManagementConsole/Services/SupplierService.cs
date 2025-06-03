@@ -7,14 +7,14 @@ namespace InventoryManagementConsole.Services
     {
         private readonly HttpClient _client;
 
-        public SupplierService()
+        public SupplierService(IHttpClientFactoryWrapper clientFactoryWrapper)
         {
-            _client = HttpClientFactory.GetClient();
+            _client = clientFactoryWrapper.GetClient();
         }
 
         public async Task GetAllSuppliersAsync()
         {
-            var suppliers = await _client.GetFromJsonAsync<List<SupplierDto>>("api/Supplier");
+            var suppliers = await _client.GetFromJsonAsync<List<SupplierDto>>("api/Supplier/getAllSupplier");
 
             Console.WriteLine("=== Suppliers ===");
             foreach (var supplier in suppliers)
@@ -37,7 +37,7 @@ namespace InventoryManagementConsole.Services
                 ContactNumber = contact,
             };
 
-            var response = await _client.PostAsJsonAsync("api/Supplier", supplier);
+            var response = await _client.PostAsJsonAsync("api/Supplier/addSupplier", supplier);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Supplier added successfully."
@@ -49,7 +49,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter Supplier ID to delete: ");
             int id = int.Parse(Console.ReadLine());
 
-            var response = await _client.DeleteAsync($"api/Supplier/{id}");
+            var response = await _client.DeleteAsync($"api/Supplier/{id}/deleteSupplier");
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Supplier deleted successfully."

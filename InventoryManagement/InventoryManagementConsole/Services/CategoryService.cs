@@ -7,14 +7,14 @@ namespace InventoryManagementConsole.Services
     {
         private readonly HttpClient _client;
 
-        public CategoryService()
+        public CategoryService(IHttpClientFactoryWrapper clientFactoryWrapper)
         {
-            _client = HttpClientFactory.GetClient();
+            _client = clientFactoryWrapper.GetClient();
         }
 
         public async Task GetAllCategoriesAsync()
         {
-            var categories = await _client.GetFromJsonAsync<List<CategoryDto>>("api/Category");
+            var categories = await _client.GetFromJsonAsync<List<CategoryDto>>("api/Category/fetchAllCategory");
 
             Console.WriteLine("=== Categories ===");
             foreach (var category in categories)
@@ -29,7 +29,7 @@ namespace InventoryManagementConsole.Services
             string name = Console.ReadLine();
 
             var category = new CategoryDto { CategoryName = name };
-            var response = await _client.PostAsJsonAsync("api/Category", category);
+            var response = await _client.PostAsJsonAsync("api/Category/addCategory", category);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Category added successfully."
@@ -50,7 +50,7 @@ namespace InventoryManagementConsole.Services
                 CategoryName = newName
             };
 
-            var response = await _client.PutAsJsonAsync($"api/Category/{id}", updatedCategory);
+            var response = await _client.PutAsJsonAsync($"api/Category/{id}/updateCategory", updatedCategory);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Category updated successfully."
@@ -62,7 +62,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter category ID to delete: ");
             int id = int.Parse(Console.ReadLine());
 
-            var response = await _client.DeleteAsync($"api/Category/{id}");
+            var response = await _client.DeleteAsync($"api/Category/{id}/deleteCategory");
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Category deleted successfully."

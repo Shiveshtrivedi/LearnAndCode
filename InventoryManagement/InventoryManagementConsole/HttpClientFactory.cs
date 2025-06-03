@@ -1,14 +1,25 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace InventoryManagementConsole
 {
-    public static class HttpClientFactory
+    public  class HttpClientFactory : IHttpClientFactoryWrapper
     {
-        private static readonly HttpClient client = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7048/") 
-        };
+        private readonly HttpClient client;
 
-        public static HttpClient GetClient() => client;
+        public HttpClientFactory(IConfiguration configuration)
+        {
+            var baseUrl = configuration["ApiSettings:BaseUrl"];
+            if (string.IsNullOrEmpty(baseUrl))
+                throw new Exception("BaseUrl is missing in configuration.");
+
+            client = new HttpClient
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
+        }
+
+        public HttpClient GetClient() => client;
     }
 }

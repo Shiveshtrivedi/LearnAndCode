@@ -13,3 +13,15 @@ C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\Inven
 C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.pdb
 C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.genruntimeconfig.cache
 C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\ref\InventoryManagementConsole.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\appsettings.json
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\InventoryManagementConsole.csproj.AssemblyReference.cache
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\shivesh.trivedi\source\repos\L&C\LearnAndCode\InventoryManagement\InventoryManagementConsole\obj\Debug\net8.0\Inventor.57E3A12A.Up2Date

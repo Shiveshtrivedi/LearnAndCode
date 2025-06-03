@@ -7,9 +7,9 @@ namespace InventoryManagementConsole.Services
     {
         private readonly HttpClient _client;
 
-        public InventoryService()
+        public InventoryService(IHttpClientFactoryWrapper clientFactoryWrapper)
         {
-            _client = HttpClientFactory.GetClient();
+            _client = clientFactoryWrapper.GetClient();
         }
 
         public async Task RegisterInventoryAsync()
@@ -42,7 +42,7 @@ namespace InventoryManagementConsole.Services
                 QuantityInStock = quantity
             };
 
-            var response = await _client.PostAsJsonAsync("api/Inventory/register", product);
+            var response = await _client.PostAsJsonAsync("api/Inventory/registerInventory", product);
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Inventory registered successfully."
                 : $"Failed: {await response.Content.ReadAsStringAsync()}");
@@ -56,7 +56,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter new Quantity: ");
             int quantity = int.Parse(Console.ReadLine());
 
-            var response = await _client.PutAsync($"api/Inventory/update?productId={productId}&quantity={quantity}", null);
+            var response = await _client.PutAsync($"api/Inventory/updateInventory?productId={productId}&quantity={quantity}", null);
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Inventory updated successfully."
                 : $"Failed: {await response.Content.ReadAsStringAsync()}");
@@ -64,7 +64,7 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetAllInventoriesAsync()
         {
-            var inventories = await _client.GetFromJsonAsync<List<InventoryDto>>("api/Inventory/all");
+            var inventories = await _client.GetFromJsonAsync<List<InventoryDto>>("api/Inventory/fetchAllInvetory");
 
             Console.WriteLine("=== All Inventories ===");
             foreach (var inv in inventories)

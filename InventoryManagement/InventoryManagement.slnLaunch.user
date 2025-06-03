@@ -1,0 +1,23 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "InventoryManagement.Tests\\InventoryManagement.Tests.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "InventoryManagementConsole\\InventoryManagementConsole.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "InventoryManagement\\InventoryManagement.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "InventoryMangement\\InventoryMangement.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

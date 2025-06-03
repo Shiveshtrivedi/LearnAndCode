@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using InventoryManagementConsole.DTOs;
+using Microsoft.Extensions.Configuration;
 
 namespace InventoryManagementConsole.Services
 {
@@ -7,14 +8,15 @@ namespace InventoryManagementConsole.Services
     {
         private readonly HttpClient _client;
 
-        public ProductService()
+
+        public ProductService(IHttpClientFactoryWrapper httpClientFactoryWrapper)
         {
-            _client = HttpClientFactory.GetClient();
+            _client = httpClientFactoryWrapper.GetClient();
         }
 
         public async Task GetAllProductsAsync()
         {
-            var products = await _client.GetFromJsonAsync<List<ProductDto>>("api/Product");
+            var products = await _client.GetFromJsonAsync<List<ProductDto>>("api/Product/fetchAllProduct");
 
             foreach (var product in products)
             {
@@ -34,7 +36,7 @@ namespace InventoryManagementConsole.Services
             decimal price = decimal.Parse(Console.ReadLine());
 
             Console.Write("Qty: ");
-            int qty = int.Parse(Console.ReadLine());
+            int quantity = int.Parse(Console.ReadLine());
 
             Console.Write("CategoryId: ");
             int categoryId = int.Parse(Console.ReadLine());
@@ -47,12 +49,12 @@ namespace InventoryManagementConsole.Services
                 ProductName = name,
                 ProductDescription = description,
                 Price = price,
-                QuantityInStock = qty,
+                QuantityInStock = quantity,
                 CategoryId = categoryId,
                 SupplierId = supplierId
             };
 
-            var response = await _client.PostAsJsonAsync("api/Product", newProduct);
+            var response = await _client.PostAsJsonAsync("api/Product/addProduct", newProduct);
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Product added successfully."
@@ -64,7 +66,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter ProductId to update: ");
             int id = int.Parse(Console.ReadLine());
 
-            var product = await _client.GetFromJsonAsync<ProductDto>($"api/Product/{id}");
+            var product = await _client.GetFromJsonAsync<ProductDto>($"api/Product/{id}/fetchProductById");
 
             if (product == null)
             {
@@ -81,7 +83,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("New Qty: ");
             product.QuantityInStock = int.Parse(Console.ReadLine());
 
-            await _client.PutAsJsonAsync("api/Product", new ProductUpdateDto
+            await _client.PutAsJsonAsync("api/Product/updateProduct", new ProductUpdateDto
             {
                 ProductId = product.ProductId,
                 ProductName = product.ProductName,
@@ -100,7 +102,7 @@ namespace InventoryManagementConsole.Services
             Console.Write("Enter ProductId to delete: ");
             int id = int.Parse(Console.ReadLine());
 
-            var response = await _client.DeleteAsync($"api/Product/{id}");
+            var response = await _client.DeleteAsync($"api/Product/{id}/deleteProduct");
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Deleted successfully."
