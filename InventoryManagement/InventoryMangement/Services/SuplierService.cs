@@ -36,5 +36,31 @@ namespace InventoryManagement.Services
             _supplierRepository.DeleteSupplier(supplierId);
         }
 
+        public Supplier GetOrCreateDefaultSupplier(int supplierId)
+        {
+            var supplier = _supplierRepository.GetSupplierById(supplierId);
+
+            if (supplier == null)
+            {
+                supplier = _supplierRepository
+                    .GetAllSuppliers()
+                    .FirstOrDefault(suppliers => suppliers.SupplierName.Equals("Default Supplier", StringComparison.OrdinalIgnoreCase));
+
+                if (supplier == null)
+                {
+                    supplier = new Supplier
+                    {
+                        SupplierId = IdGenerator.GetNextId(),
+                        SupplierName = "Default Supplier"
+                    };
+
+                    _supplierRepository.AddSupplier(supplier);
+                }
+            }
+
+            return supplier;
+        }
+
+
     }
 }

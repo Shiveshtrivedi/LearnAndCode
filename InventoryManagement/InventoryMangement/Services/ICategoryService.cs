@@ -15,5 +15,7 @@ namespace InventoryManagement.Services
         IEnumerable<Category> GetAllCategories();
         Category GetCategoryById(int categoryId);
         void UpdateCategory(Category updatedCategory);
+        Category GetOrCreateUncategorizedCategory(int categoryId);
+
     }
 }

@@ -26,10 +26,26 @@ namespace InventoryManagement.Services
             _inventoryService = inventoryService;
         }
 
-        public void RegisterProduct(ProductCreateDto productDto)
+        public string RegisterProduct(ProductCreateDto productDto)
         {
-            var category = _categoryService.GetCategoryById(productDto.CategoryId);
-            var supplier = _supplierService.GetSupplierById(productDto.SupplierId);
+            string resultMessage = "Product registered successfully.";
+
+            var category = _categoryService.GetOrCreateUncategorizedCategory(productDto.CategoryId);
+
+            if (category.CategoryId != productDto.CategoryId)
+            {
+                resultMessage = $"Category not found. Product assigned to 'Uncategorized'.";
+            }
+
+            var supplier = _supplierService.GetOrCreateDefaultSupplier(productDto.SupplierId);
+
+            if (supplier.SupplierId != productDto.SupplierId)
+            {
+                if (resultMessage == "Product registered successfully.")
+                    resultMessage = "Supplier not found. Product assigned to 'Default Supplier'.";
+                else
+                    resultMessage += " Supplier not found. Product assigned to 'Default Supplier'.";
+            }
 
             var product = new Product
             {
@@ -47,8 +63,10 @@ namespace InventoryManagement.Services
             _productRepository.AddProduct(product);
             _inventoryService.RegisterInventory(product);
 
-            return;
+            return resultMessage;
         }
+
+
 
         public OperationResult UpdateProduct(ProductUpdateDto productDto)
         {
@@ -80,7 +98,6 @@ namespace InventoryManagement.Services
                     throw new Exception($"Failed to register product: {productDto.ProductName}", ex);
                 }
             }
-
         }
 
         public void RemoveProduct(int productId)

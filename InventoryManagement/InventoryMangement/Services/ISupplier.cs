@@ -14,5 +14,6 @@ namespace InventoryManagement.Services
         Supplier GetSupplierById(int supplierId);
         void AddSupplier(Supplier supplier);
         void DeleteSupplier(int supplierId);
+        Supplier GetOrCreateDefaultSupplier(int supplierId);
     }
 }

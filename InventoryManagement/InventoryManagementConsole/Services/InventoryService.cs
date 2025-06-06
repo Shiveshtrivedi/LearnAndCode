@@ -67,9 +67,9 @@ namespace InventoryManagementConsole.Services
             var inventories = await _client.GetFromJsonAsync<List<InventoryDto>>("api/Inventory/fetchAllInvetory");
 
             Console.WriteLine("=== All Inventories ===");
-            foreach (var inv in inventories)
+            foreach (var inventory in inventories)
             {
-                Console.WriteLine($"Product ID: {inv.ProductId}, Quantity: {inv.Quantity}");
+                Console.WriteLine($"Product ID: {inventory.ProductId}, Quantity: {inventory.QuantityAvailable}");
             }
         }
 

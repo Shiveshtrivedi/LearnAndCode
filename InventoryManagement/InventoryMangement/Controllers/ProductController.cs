@@ -22,9 +22,9 @@ namespace InventoryManagement.Controllers
         {
             try
             {
-                _productService.RegisterProduct(productDto);
+                string message = _productService.RegisterProduct(productDto);
 
-                return Ok("Product created successfully.");
+                return Ok($"Product added successfully {message}");
             }
             catch (InvalidOperationException ex)
             {
@@ -69,8 +69,20 @@ namespace InventoryManagement.Controllers
         [HttpGet("fetchAllProduct")]
         public IActionResult GetAll()
         {
-            var products = _productService.GetAllProducts();
-            return Ok(products);
+            try
+            {
+                var products = _productService.GetAllProducts();
+
+                if (products == null)
+                    return BadRequest("No product available");
+
+                return Ok(products);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpGet("{productId}/fetchProductById")]
@@ -104,8 +116,16 @@ namespace InventoryManagement.Controllers
         [HttpGet("{productName}/getProductByName")]
         public IActionResult GetByName(string productName)
         {
-            var product = _productService.GetProductByName(productName);
-            return Ok(product);
+            try
+            {
+                var product = _productService.GetProductByName(productName);
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
     }
 }

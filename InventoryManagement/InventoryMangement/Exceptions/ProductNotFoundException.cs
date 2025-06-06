@@ -8,7 +8,7 @@ namespace InventoryManagement.Exceptions
 {
     public class ProductNotFoundException : InventoryException
     {
-        public ProductNotFoundException(int productId) : base($"Product with ID {productId} was not found")
+        public ProductNotFoundException(int productId = 0) : base($"Product with ID {productId} was not found")
         {
             
         }

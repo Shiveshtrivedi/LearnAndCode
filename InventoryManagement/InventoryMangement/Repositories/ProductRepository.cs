@@ -13,6 +13,10 @@ namespace InventoryManagement.Repositories
     {
         public IEnumerable<Product> GetAllProducts()
         {
+            if(ProductDb.ProductData.Count == 0)
+            {
+                throw new ProductNotFoundException();
+            }
             return ProductDb.ProductData;
         }
 
@@ -31,11 +35,15 @@ namespace InventoryManagement.Repositories
         public Product GetProductByName(string productName)
         {
             var product = ProductDb.ProductData.FirstOrDefault(product => product.ProductName == productName);
+            if (product == null)
+            {
+                throw new ProductNotFoundException();
+            }
             return product;          
         }
 
         public void AddProduct(Product product)
-        {
+         {
             var existingProduct = ProductDb.ProductData.FirstOrDefault(p => p.ProductId == product.ProductId);
 
             if (existingProduct != null)

@@ -18,8 +18,16 @@ namespace InventoryManagement.Controllers
         [HttpGet("fetchAllCategory")]
         public ActionResult<IEnumerable<Category>> GetAllCategories()
         {
-            var categories = _categoryService.GetAllCategories();
-            return Ok(categories);
+            try
+            {
+                var categories = _categoryService.GetAllCategories();
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpGet("{categoryId}/fetchCategoryById")]

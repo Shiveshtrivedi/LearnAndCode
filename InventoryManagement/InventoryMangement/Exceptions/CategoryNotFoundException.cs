@@ -8,7 +8,7 @@ namespace InventoryManagement.Exceptions
 {
     public class CategoryNotFoundException : InventoryException
     {
-        public CategoryNotFoundException(int categoryId) 
+        public CategoryNotFoundException(int categoryId=0) 
             : base($"Category with this Id {categoryId} not found")
         { }
     }

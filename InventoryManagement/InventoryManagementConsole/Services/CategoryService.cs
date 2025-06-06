@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 using InventoryManagementConsole.DTOs;
 
 namespace InventoryManagementConsole.Services
@@ -14,14 +15,48 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetAllCategoriesAsync()
         {
-            var categories = await _client.GetFromJsonAsync<List<CategoryDto>>("api/Category/fetchAllCategory");
-
-            Console.WriteLine("=== Categories ===");
-            foreach (var category in categories)
+            try
             {
-                Console.WriteLine($"{category.CategoryId} | {category.CategoryName}");
+                var response = await _client.GetAsync("api/Category/fetchAllCategory");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
+                    return;
+                }
+
+                var categories = await response.Content.ReadFromJsonAsync<List<CategoryDto>>();
+
+                if (categories == null || categories.Count == 0)
+                {
+                    Console.WriteLine("No categories available.");
+                    return;
+                }
+
+                Console.WriteLine("=== Categories ===");
+                foreach (var category in categories)
+                {
+                    Console.WriteLine($"{category.CategoryId} | {category.CategoryName}");
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request error: {ex.Message}");
+            }
+            catch (NotSupportedException ex)
+            {
+                Console.WriteLine($"Unsupported content type: {ex.Message}");
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine($"Invalid JSON format: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unexpected error: {ex.Message}");
             }
         }
+
 
         public async Task AddCategoryAsync()
         {

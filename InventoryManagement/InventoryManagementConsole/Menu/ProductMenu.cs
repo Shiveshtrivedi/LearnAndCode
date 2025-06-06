@@ -5,7 +5,7 @@ namespace InventoryManagementConsole.Menus
 {
     public class ProductMenu
     {
-        public static async void Show()
+        public static async Task Show()
         {
             IConfiguration configuration = new ConfigurationBuilder()
                                                         .AddJsonFile("appsettings.json")
@@ -20,8 +20,9 @@ namespace InventoryManagementConsole.Menus
                 Console.WriteLine("=== Product Menu ===");
                 Console.WriteLine("1. View all products");
                 Console.WriteLine("2. Add product");
-                Console.WriteLine("3. Update product");
-                Console.WriteLine("4. Delete product");
+                Console.WriteLine("3. Add Multiple product");
+                Console.WriteLine("4. Update product");
+                Console.WriteLine("5. Delete product");
                 Console.WriteLine("0. Back");
                 Console.Write("Choose option: ");
                 string option = Console.ReadLine();
@@ -30,8 +31,9 @@ namespace InventoryManagementConsole.Menus
                 {
                     case "1": await service.GetAllProductsAsync(); break;
                     case "2": await service.AddProductAsync(); break;
-                    case "3": await service.UpdateProductAsync(); break;
-                    case "4": await service.DeleteProductAsync(); break;
+                    case "3": await service.AddMultipleProductsAsync(); break;
+                    case "4": await service.UpdateProductAsync(); break;
+                    case "5": await service.DeleteProductAsync(); break;
                     case "0": return;
                     default: Console.WriteLine("Invalid option."); break;
                 }

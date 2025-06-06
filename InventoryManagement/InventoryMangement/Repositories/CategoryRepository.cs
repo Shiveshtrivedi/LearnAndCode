@@ -48,9 +48,6 @@ namespace InventoryManagement.Repositories
         {
             var category = CategoryDb.CategoryData.FirstOrDefault(categories => categories.CategoryId == categoryId);
 
-            if (category == null)
-                throw new CategoryNotFoundException(categoryId);
-
             return category;
         }
     }

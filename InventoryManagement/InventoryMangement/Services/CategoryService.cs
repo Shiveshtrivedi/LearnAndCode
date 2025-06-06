@@ -37,10 +37,6 @@ namespace InventoryManagement.Services
         public Category GetCategoryById(int categoryId)
         {
             var category = _categoryRepository.GetCategoryById(categoryId);
-            if (category == null)
-            {
-                throw new CategoryNotFoundException(categoryId);
-            }
 
             return category;
         }
@@ -54,6 +50,31 @@ namespace InventoryManagement.Services
             }
 
             existingCategory.CategoryName = updatedCategory.CategoryName;
+        }
+
+        public Category GetOrCreateUncategorizedCategory(int categoryId)
+        {
+            var category = _categoryRepository.GetCategoryById(categoryId);
+
+            if (category == null)
+            {
+                category = _categoryRepository
+                    .GetAllCategories()
+                    .FirstOrDefault(c => c.CategoryName.Equals("Uncategorized", StringComparison.OrdinalIgnoreCase));
+
+                if (category == null)
+                {
+                    category = new Category
+                    {
+                        CategoryId = IdGenerator.GetNextId(),
+                        CategoryName = "Uncategorized"
+                    };
+
+                    _categoryRepository.AddCategory(category);
+                }
+            }
+
+            return category;
         }
 
     }

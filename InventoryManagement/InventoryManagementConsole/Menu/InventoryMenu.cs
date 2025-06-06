@@ -5,7 +5,7 @@ namespace InventoryManagementConsole.Menus
 {
     public class InventoryMenu
     {
-        public static async void Show()
+        public static async Task Show()
         {
             IConfiguration configuration = new ConfigurationBuilder()
                                                          .AddJsonFile("appsettings.json")

@@ -39,9 +39,6 @@ namespace InventoryManagement.Repositories
         {
             var supplier = SupplierDb.SupplierData.FirstOrDefault(suppliers => suppliers.SupplierId == supplierId);
 
-            if (supplier == null)
-                throw new SupplierNotFoundException(supplierId);
-
             return supplier;
         }
     }

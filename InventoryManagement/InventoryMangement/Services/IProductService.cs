@@ -17,7 +17,7 @@ namespace InventoryManagement.Services
         Product GetProductByName(string productName);
         IEnumerable<Product> GetAllProducts();
         OperationResult UpdateProduct(ProductUpdateDto dto);
-        void RegisterProduct(ProductCreateDto dto);
+        string RegisterProduct(ProductCreateDto dto);
         void RemoveProduct(int productId);
         void RegisterMultipleProducts(List<ProductCreateDto> dtoList);
 
