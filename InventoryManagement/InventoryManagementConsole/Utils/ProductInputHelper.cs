@@ -1,5 +1,5 @@
 ﻿using InventoryManagementConsole.DTOs;
-using InventoryManagementConsole.Services;
+using InventoryManagementConsole.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,7 +57,7 @@ namespace InventoryManagementConsole.Utils
             return products;
         }
 
-        public static async Task<ProductUpdateDto?> ReadProductUpdateDtoAsync(Services.IProductService service)
+        public static async Task<ProductUpdateDto?> ReadProductUpdateDtoAsync(IProductService service)
         {
             Console.Write("Enter ProductId to update: ");
             int id = int.Parse(Console.ReadLine());

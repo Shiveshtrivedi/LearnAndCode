@@ -4,6 +4,7 @@ using InventoryManagementConsole.DTOs;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using InventoryManagementConsole.Services.Interfaces;
 
 namespace InventoryManagementConsole.Services
 {
@@ -18,38 +19,21 @@ namespace InventoryManagementConsole.Services
 
         public async Task GetAllProductsAsync()
         {
-            try
+           
+                var products = await _client.GetFromJsonAsync<List<ProductDto>>("api/Product/fetchAllProduct");
+
+
+            Console.WriteLine("=== All Product ===");
+            if (products.Count == 0)
             {
-                var response = await _client.GetAsync("api/Product/fetchAllProduct");
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Error: {response.StatusCode} - {errorContent}");
-                    return;
-                }
-
-                var products = await response.Content.ReadFromJsonAsync<List<ProductDto>>();
-
-                if (products == null || products.Count == 0)
-                {
-                    Console.WriteLine("No products available.");
-                    return;
-                }
-
-                
+                Console.WriteLine("Product is not available");
+            }
+            else
+            {
                 foreach (var product in products)
                 {
                     Console.WriteLine($"P.ID : {product.ProductId} | Name : {product.ProductName} | Price : {product.Price:C} | Quantity : {product.QuantityInStock}");
                 }
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Request error: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
             }
         }
 

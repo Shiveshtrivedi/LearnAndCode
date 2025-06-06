@@ -1,9 +1,10 @@
 ﻿using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
-using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
 using InventoryManagement.DTOs;
 using InventoryMangement.DTOs;
+using InventoryMangement.Services.Interface;
+using InventoryMangement.Repositories.Interface;
 
 namespace InventoryManagement.Services
 {
@@ -103,6 +104,7 @@ namespace InventoryManagement.Services
         public void RemoveProduct(int productId)
         {
              _productRepository.DeleteProduct(productId);
+            _inventoryService.DeleteInventory(productId);
         }
 
         public IEnumerable<Product> GetAllProducts()

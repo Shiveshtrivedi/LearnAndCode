@@ -3,6 +3,7 @@ using InventoryManagementConsole.DTOs;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using InventoryManagementConsole.Services.Interfaces;
 
 namespace InventoryManagementConsole.Services
 {
@@ -28,10 +29,18 @@ namespace InventoryManagementConsole.Services
             var inventories = await _client.GetFromJsonAsync<List<InventoryDto>>("api/Inventory/fetchAllInvetory");
 
             Console.WriteLine("=== All Inventories ===");
-            foreach (var inventory in inventories)
+            if(inventories.Count==0)
             {
-                Console.WriteLine($"Product ID: {inventory.ProductId}, Quantity: {inventory.QuantityAvailable}");
+                Console.WriteLine("Inventory is empty");
             }
+            else
+            {
+                foreach (var inventory in inventories)
+                {
+                    Console.WriteLine($"Product ID: {inventory.ProductId}, Quantity: {inventory.QuantityAvailable}");
+                }
+            }
+                
         }
 
         public async Task GetLowStockItemsAsync()

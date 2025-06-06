@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using InventoryMangement.DTOs;
 
-namespace InventoryManagement.Services
+namespace InventoryMangement.Services.Interface
 {
     public interface IProductService
     {

@@ -5,6 +5,7 @@ using InventoryManagement.Utils;
 using InventoryManagement.Enum;
 using System.Collections.Generic;
 using System.Linq;
+using InventoryMangement.Repositories.Interface;
 
 namespace InventoryManagement.Repositories
 {
@@ -49,6 +50,18 @@ namespace InventoryManagement.Repositories
             }
 
             inventory.QuantityAvailable = newQuantity;
+        }
+
+        public void DeleteInventory(int productId)
+        {
+            var result = InventoryDb.InventoryData.FirstOrDefault(inventory => inventory.ProductId == productId);
+
+            if (result == null)
+            {
+                throw new InventoryException();
+            }
+
+            InventoryDb.InventoryData.Remove(result);
         }
     }
 }

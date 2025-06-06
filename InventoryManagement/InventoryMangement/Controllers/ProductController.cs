@@ -1,7 +1,7 @@
 ﻿using InventoryManagement.DTOs;
 using InventoryManagement.Exceptions;
-using InventoryManagement.Services;
 using InventoryMangement.DTOs;
+using InventoryMangement.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Controllers
@@ -72,9 +72,6 @@ namespace InventoryManagement.Controllers
             try
             {
                 var products = _productService.GetAllProducts();
-
-                if (products == null)
-                    return BadRequest("No product available");
 
                 return Ok(products);
             }

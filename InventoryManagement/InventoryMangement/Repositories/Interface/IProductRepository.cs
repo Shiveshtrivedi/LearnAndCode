@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Repositories
+namespace InventoryMangement.Repositories.Interface
 {
     public interface IProductRepository
     {

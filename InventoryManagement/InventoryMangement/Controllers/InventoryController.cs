@@ -1,5 +1,5 @@
 ﻿using InventoryManagement.Models;
-using InventoryManagement.Services;
+using InventoryMangement.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Controllers

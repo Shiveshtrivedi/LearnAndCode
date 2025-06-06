@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using InventoryManagementConsole.DTOs;
+using InventoryManagementConsole.Services.Interfaces;
 
 namespace InventoryManagementConsole.Services
 {

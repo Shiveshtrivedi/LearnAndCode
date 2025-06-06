@@ -3,6 +3,7 @@ using InventoryManagement.Enum;
 using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
 using InventoryManagement.Utils;
+using InventoryMangement.Repositories.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;

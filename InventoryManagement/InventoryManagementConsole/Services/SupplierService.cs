@@ -3,6 +3,7 @@ using InventoryManagementConsole.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InventoryManagementConsole.Services.Interfaces;
 
 namespace InventoryManagementConsole.Services
 {
@@ -20,9 +21,16 @@ namespace InventoryManagementConsole.Services
             var suppliers = await _client.GetFromJsonAsync<List<SupplierDto>>("api/Supplier/getAllSupplier");
 
             Console.WriteLine("=== Suppliers ===");
-            foreach (var supplier in suppliers)
+            if(suppliers.Count==0)
             {
-                Console.WriteLine($"{supplier.SupplierId} | {supplier.SupplierName} | {supplier.ContactNumber}");
+                Console.WriteLine("No Supplier present");
+            }
+            else
+            {
+                foreach (var supplier in suppliers)
+                {
+                    Console.WriteLine($"S.ID : {supplier.SupplierId} | Name : {supplier.SupplierName} | Contact : {supplier.ContactNumber}");
+                }
             }
         }
 

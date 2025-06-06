@@ -1,7 +1,8 @@
 ﻿using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
-using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
+using InventoryMangement.Repositories.Interface;
+using InventoryMangement.Services.Interface;
 
 namespace InventoryManagement.Services
 {
@@ -53,6 +54,11 @@ namespace InventoryManagement.Services
             return _productRepository.GetAllProducts()
                     .Where(product => product.QuantityInStock < LowStockThreshold)
                     .ToList();
+        }
+
+        public void DeleteInventory(int productId)
+        {
+            _inventoryRepository.DeleteInventory(productId);
         }
     }
 }

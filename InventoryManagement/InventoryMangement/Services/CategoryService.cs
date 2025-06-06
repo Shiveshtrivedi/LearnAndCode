@@ -1,7 +1,8 @@
 ﻿using InventoryManagement.Exceptions;
 using InventoryManagement.Models;
-using InventoryManagement.Repositories;
 using InventoryManagement.Utils;
+using InventoryMangement.Repositories.Interface;
+using InventoryMangement.Services.Interface;
 
 namespace InventoryManagement.Services
 {

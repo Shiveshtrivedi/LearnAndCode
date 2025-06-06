@@ -6,6 +6,7 @@ using InventoryManagement.Context;
 using InventoryManagement.Exceptions;
 using InventoryManagement.Enum;
 using InventoryManagement.Utils;
+using InventoryMangement.Repositories.Interface;
 
 namespace InventoryManagement.Repositories
 {
@@ -13,10 +14,6 @@ namespace InventoryManagement.Repositories
     {
         public IEnumerable<Product> GetAllProducts()
         {
-            if(ProductDb.ProductData.Count == 0)
-            {
-                throw new ProductNotFoundException();
-            }
             return ProductDb.ProductData;
         }
 

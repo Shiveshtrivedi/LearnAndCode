@@ -6,14 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Services
+namespace InventoryMangement.Repositories.Interface
 {
-    public interface ISupplierService
+    public interface ISupplierRepository
     {
-        IEnumerable<Supplier> GetAllSuppliers();
-        Supplier GetSupplierById(int supplierId);
         void AddSupplier(Supplier supplier);
+        Supplier GetSupplierById(int supplierId);
+        IEnumerable<Supplier> GetAllSuppliers();
         void DeleteSupplier(int supplierId);
-        Supplier GetOrCreateDefaultSupplier(int supplierId);
     }
 }

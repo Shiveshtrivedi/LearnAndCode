@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagementConsole.Services
+namespace InventoryManagementConsole.Services.Interfaces
 {
     public interface ICategoryService
     {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using InventoryManagement.Enum;
 using InventoryMangement.Exceptions;
+using InventoryMangement.Repositories.Interface;
 
 namespace InventoryManagement.Repositories
 {

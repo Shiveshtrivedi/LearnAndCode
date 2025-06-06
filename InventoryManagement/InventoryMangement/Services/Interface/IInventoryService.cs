@@ -6,14 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InventoryManagement.Repositories
+namespace InventoryMangement.Services.Interface
 {
-    public interface IInventoryRepository
+    public interface IInventoryService
     {
-        void AddInventory(Inventory inventory);
-        Inventory GetInventoryByProductId(int productId);
+        void RegisterInventory(Product product);
         IEnumerable<Inventory> GetAllInventories();
         void UpdateInventory(int productId, int newQuantity);
+        IEnumerable<Product> GetLowStockItems();
+        void DeleteInventory(int productId);
     }
 
 }
