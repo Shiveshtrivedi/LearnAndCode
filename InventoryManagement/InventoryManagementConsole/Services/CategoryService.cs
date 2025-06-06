@@ -13,72 +13,28 @@ namespace InventoryManagementConsole.Services
             _client = clientFactoryWrapper.GetClient();
         }
 
-        public async Task GetAllCategoriesAsync()
+        public async Task<List<CategoryDto>> GetAllCategoriesAsync()
         {
-            try
-            {
-                var response = await _client.GetAsync("api/Category/fetchAllCategory");
+            var response = await _client.GetAsync("api/Category/fetchAllCategory");
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    Console.WriteLine($"Error: {response.StatusCode} - {response.ReasonPhrase}");
-                    return;
-                }
+            if (!response.IsSuccessStatusCode)
+                throw new Exception($"Error: {response.StatusCode} - {response.ReasonPhrase}");
 
-                var categories = await response.Content.ReadFromJsonAsync<List<CategoryDto>>();
+            var categories = await response.Content.ReadFromJsonAsync<List<CategoryDto>>();
 
-                if (categories == null || categories.Count == 0)
-                {
-                    Console.WriteLine("No categories available.");
-                    return;
-                }
-
-                Console.WriteLine("=== Categories ===");
-                foreach (var category in categories)
-                {
-                    Console.WriteLine($"{category.CategoryId} | {category.CategoryName}");
-                }
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Request error: {ex.Message}");
-            }
-            catch (NotSupportedException ex)
-            {
-                Console.WriteLine($"Unsupported content type: {ex.Message}");
-            }
-            catch (JsonException ex)
-            {
-                Console.WriteLine($"Invalid JSON format: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unexpected error: {ex.Message}");
-            }
+            return categories ?? new List<CategoryDto>();
         }
 
-
-        public async Task AddCategoryAsync()
+        public async Task<string> AddCategoryAsync(CategoryDto category)
         {
-            Console.Write("Enter category name: ");
-            string name = Console.ReadLine();
-
-            var category = new CategoryDto { CategoryName = name };
             var response = await _client.PostAsJsonAsync("api/Category/addCategory", category);
-
-            Console.WriteLine(response.IsSuccessStatusCode
+            return response.IsSuccessStatusCode
                 ? "Category added successfully."
-                : $"Failed: {await response.Content.ReadAsStringAsync()}");
+                : $"Failed: {await response.Content.ReadAsStringAsync()}";
         }
 
-        public async Task UpdateCategoryAsync()
+        public async Task<string> UpdateCategoryAsync(int id, string newName)
         {
-            Console.Write("Enter category ID to update: ");
-            int id = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter new name: ");
-            string newName = Console.ReadLine();
-
             var updatedCategory = new CategoryDto
             {
                 CategoryId = id,
@@ -87,21 +43,18 @@ namespace InventoryManagementConsole.Services
 
             var response = await _client.PutAsJsonAsync($"api/Category/{id}/updateCategory", updatedCategory);
 
-            Console.WriteLine(response.IsSuccessStatusCode
+            return response.IsSuccessStatusCode
                 ? "Category updated successfully."
-                : $"Failed: {await response.Content.ReadAsStringAsync()}");
+                : $"Failed: {await response.Content.ReadAsStringAsync()}";
         }
 
-        public async Task DeleteCategoryAsync()
+        public async Task<string> DeleteCategoryAsync(int id)
         {
-            Console.Write("Enter category ID to delete: ");
-            int id = int.Parse(Console.ReadLine());
-
             var response = await _client.DeleteAsync($"api/Category/{id}/deleteCategory");
 
-            Console.WriteLine(response.IsSuccessStatusCode
+            return response.IsSuccessStatusCode
                 ? "Category deleted successfully."
-                : $"Failed: {await response.Content.ReadAsStringAsync()}");
+                : $"Failed: {await response.Content.ReadAsStringAsync()}";
         }
     }
 }

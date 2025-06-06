@@ -1,4 +1,5 @@
-﻿using InventoryManagementConsole.Menus;
+﻿using InventoryManagementConsole.Menu.Interfaces;
+using InventoryManagementConsole.Menus;
 
 class Program
 {
@@ -14,20 +15,34 @@ class Program
             Console.WriteLine("4. Inventory Menu");
             Console.WriteLine("0. Exit");
             Console.Write("Choose option: ");
-            string option = Console.ReadLine();
+            string userInput = Console.ReadLine();
 
-            switch (option)
+            IMenu selectedMenu = userInput switch
             {
-                case "1": await ProductMenu.Show(); break;
-                case "2": await CategoryMenu.Show(); break;
-                case "3": await SupplierMenu.Show(); break;
-                case "4": await InventoryMenu.Show(); break;
-                case "0": return;
-                default: Console.WriteLine("Invalid option."); break;
+                "1" => new ProductMenu(),
+                "2" => new CategoryMenu(),
+                "3" => new SupplierMenu(),
+                "4" => new InventoryMenu(),
+                "0" => null,
+                _ => null
+            };
+
+            if (userInput == "0")
+            {
+                Console.WriteLine("Exiting the application. Goodbye!");
+                return;
             }
 
-            Console.WriteLine("Press Enter to continue...");
-            Console.ReadLine();
+            if (selectedMenu != null)
+            {
+                await selectedMenu.Show();
+            }
+            else
+            {
+                Console.WriteLine("Invalid selection. Please try again.");
+                Console.WriteLine("Press Enter to continue...");
+                Console.ReadLine();
+            }
         }
     }
 }

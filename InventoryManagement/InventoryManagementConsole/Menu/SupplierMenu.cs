@@ -1,11 +1,15 @@
 ﻿using InventoryManagementConsole.Services;
 using Microsoft.Extensions.Configuration;
+using InventoryManagementConsole.DTOs;
+using System.Threading.Tasks;
+using InventoryManagementConsole.Utils;
+using InventoryManagementConsole.Menu.Interfaces;
 
 namespace InventoryManagementConsole.Menus
 {
-    public class SupplierMenu
+    public class SupplierMenu : IMenu
     {
-        public static async Task Show()
+        public async Task Show()
         {
             IConfiguration configuration = new ConfigurationBuilder()
                                                         .AddJsonFile("appsettings.json")
@@ -27,11 +31,22 @@ namespace InventoryManagementConsole.Menus
 
                 switch (option)
                 {
-                    case "1": await service.GetAllSuppliersAsync(); break;
-                    case "2": await service.AddSupplierAsync(); break;
-                    case "3": await service.DeleteSupplierAsync(); break;
-                    case "0": return;
-                    default: Console.WriteLine("Invalid option."); break;
+                    case "1":
+                        await service.GetAllSuppliersAsync();
+                        break;
+                    case "2":
+                        var newSupplier = SupplierInputHelper.ReadSupplier();
+                        await service.AddSupplierAsync(newSupplier);
+                        break;
+                    case "3":
+                        int id = SupplierInputHelper.ReadSupplierId();
+                        await service.DeleteSupplierAsync(id);
+                        break;
+                    case "0":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
                 }
 
                 Console.WriteLine("\nPress Enter to continue...");

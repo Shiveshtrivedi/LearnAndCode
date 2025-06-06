@@ -1,5 +1,8 @@
 ﻿using System.Net.Http.Json;
 using InventoryManagementConsole.DTOs;
+using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
 
 namespace InventoryManagementConsole.Services
 {
@@ -12,50 +15,8 @@ namespace InventoryManagementConsole.Services
             _client = clientFactoryWrapper.GetClient();
         }
 
-        public async Task RegisterInventoryAsync()
+        public async Task UpdateInventoryAsync(int productId, int quantity)
         {
-            Console.Write("Product ID: ");
-            int productId = int.Parse(Console.ReadLine());
-
-            Console.Write("Product Name: ");
-            string productName = Console.ReadLine();
-
-            Console.Write("Category ID: ");
-            int categoryId = int.Parse(Console.ReadLine());
-
-            Console.Write("Supplier ID: ");
-            int supplierId = int.Parse(Console.ReadLine());
-
-            Console.Write("Price: ");
-            decimal price = decimal.Parse(Console.ReadLine());
-
-            Console.Write("Quantity: ");
-            int quantity = int.Parse(Console.ReadLine());
-
-            var product = new ProductDto
-            {
-                ProductId = productId,
-                ProductName = productName,
-                CategoryId = categoryId,
-                SupplierId = supplierId,
-                Price = price,
-                QuantityInStock = quantity
-            };
-
-            var response = await _client.PostAsJsonAsync("api/Inventory/registerInventory", product);
-            Console.WriteLine(response.IsSuccessStatusCode
-                ? "Inventory registered successfully."
-                : $"Failed: {await response.Content.ReadAsStringAsync()}");
-        }
-
-        public async Task UpdateInventoryAsync()
-        {
-            Console.Write("Enter Product ID to update: ");
-            int productId = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter new Quantity: ");
-            int quantity = int.Parse(Console.ReadLine());
-
             var response = await _client.PutAsync($"api/Inventory/updateInventory?productId={productId}&quantity={quantity}", null);
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Inventory updated successfully."

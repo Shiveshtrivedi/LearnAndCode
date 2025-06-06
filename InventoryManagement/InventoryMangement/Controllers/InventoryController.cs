@@ -15,20 +15,6 @@ namespace InventoryManagement.Controllers
             _inventoryService = inventoryService;
         }
 
-        [HttpPost("registerInventory")]
-        public ActionResult RegisterInventory([FromBody] Product product)
-        {
-            try
-            {
-                 _inventoryService.RegisterInventory(product);
-                return Ok("Inventory registered successfully.");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPut("updateInventory")]
         public ActionResult UpdateInventory([FromQuery] int productId, [FromQuery] int quantity)
         {

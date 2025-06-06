@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using InventoryManagementConsole.DTOs;
+using System.Threading.Tasks;
 
 namespace InventoryManagementConsole.Services
 {
     public interface ISupplierService
     {
         Task GetAllSuppliersAsync();
-        Task AddSupplierAsync();
-        Task DeleteSupplierAsync();
+        Task AddSupplierAsync(SupplierDto supplier);
+        Task DeleteSupplierAsync(int supplieId);
     }
 }

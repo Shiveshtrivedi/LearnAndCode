@@ -58,7 +58,7 @@ namespace InventoryManagement.Controllers
             }
         }
 
-        [HttpPut("{id}/updateCategory")]
+        [HttpPut("{categoryId}/updateCategory")]
         public IActionResult UpdateCategory(int categoryId, [FromBody] Category updatedCategory)
         {
             try
@@ -73,7 +73,7 @@ namespace InventoryManagement.Controllers
             }
         }
 
-        [HttpDelete("{id}/deleteCategory")]
+        [HttpDelete("{categoryId}/deleteCategory")]
         public IActionResult DeleteCategory(int categoryId)
         {
             try

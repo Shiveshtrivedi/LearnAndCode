@@ -1,11 +1,15 @@
 ﻿using InventoryManagementConsole.Services;
 using Microsoft.Extensions.Configuration;
+using InventoryManagementConsole.DTOs;
+using System.Threading.Tasks;
+using InventoryManagementConsole.Utils;
+using InventoryManagementConsole.Menu.Interfaces;
 
 namespace InventoryManagementConsole.Menus
 {
-    public class ProductMenu
+    public class ProductMenu : IMenu
     {
-        public static async Task Show()
+        public async Task Show()
         {
             IConfiguration configuration = new ConfigurationBuilder()
                                                         .AddJsonFile("appsettings.json")
@@ -29,13 +33,33 @@ namespace InventoryManagementConsole.Menus
 
                 switch (option)
                 {
-                    case "1": await service.GetAllProductsAsync(); break;
-                    case "2": await service.AddProductAsync(); break;
-                    case "3": await service.AddMultipleProductsAsync(); break;
-                    case "4": await service.UpdateProductAsync(); break;
-                    case "5": await service.DeleteProductAsync(); break;
-                    case "0": return;
-                    default: Console.WriteLine("Invalid option."); break;
+                    case "1":
+                        await service.GetAllProductsAsync();
+                        break;
+                    case "2":
+                        var newProduct = ProductInputHelper.ReadProductCreateDto();
+                        await service.AddProductAsync(newProduct);
+                        break;
+                    case "3":
+                        var multipleProducts = ProductInputHelper.ReadMultipleProductCreateDtos();
+                        await service.AddMultipleProductsAsync(multipleProducts);
+                        break;
+                    case "4":
+                        var updatedProduct = await ProductInputHelper.ReadProductUpdateDtoAsync(service);
+                        if (updatedProduct != null)
+                        {
+                            await service.UpdateProductAsync(updatedProduct);
+                        }
+                        break;
+                    case "5":
+                        int deleteId = ProductInputHelper.ReadProductId("delete");
+                        await service.DeleteProductAsync(deleteId);
+                        break;
+                    case "0":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
                 }
 
                 Console.WriteLine("Press Enter to continue...");

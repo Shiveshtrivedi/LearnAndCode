@@ -1,9 +1,12 @@
 ﻿using System.Net.Http.Json;
 using InventoryManagementConsole.DTOs;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InventoryManagementConsole.Services
 {
-    public class SupplierService
+    public class SupplierService : ISupplierService
     {
         private readonly HttpClient _client;
 
@@ -23,20 +26,8 @@ namespace InventoryManagementConsole.Services
             }
         }
 
-        public async Task AddSupplierAsync()
+        public async Task AddSupplierAsync(SupplierDto supplier)
         {
-            Console.Write("Enter Supplier Name: ");
-            string name = Console.ReadLine();
-
-            Console.Write("Enter Contact Number: ");
-            string contact = Console.ReadLine();
-
-            var supplier = new SupplierDto
-            {
-                SupplierName = name,
-                ContactNumber = contact,
-            };
-
             var response = await _client.PostAsJsonAsync("api/Supplier/addSupplier", supplier);
 
             Console.WriteLine(response.IsSuccessStatusCode
@@ -44,12 +35,9 @@ namespace InventoryManagementConsole.Services
                 : $"Failed: {await response.Content.ReadAsStringAsync()}");
         }
 
-        public async Task DeleteSupplierAsync()
+        public async Task DeleteSupplierAsync(int supplieId)
         {
-            Console.Write("Enter Supplier ID to delete: ");
-            int id = int.Parse(Console.ReadLine());
-
-            var response = await _client.DeleteAsync($"api/Supplier/{id}/deleteSupplier");
+            var response = await _client.DeleteAsync($"api/Supplier/{supplieId}/deleteSupplier");
 
             Console.WriteLine(response.IsSuccessStatusCode
                 ? "Supplier deleted successfully."

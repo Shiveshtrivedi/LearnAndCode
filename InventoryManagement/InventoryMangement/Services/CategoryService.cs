@@ -16,6 +16,7 @@ namespace InventoryManagement.Services
 
         public void AddCategory(Category category)
         {
+            category.CategoryId = IdGenerator.GetNextId();
             _categoryRepository.AddCategory(category);
         }
 

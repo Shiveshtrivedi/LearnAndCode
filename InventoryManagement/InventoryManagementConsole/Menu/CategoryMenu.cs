@@ -1,11 +1,16 @@
-﻿using InventoryManagementConsole.Services;
+﻿using InventoryManagementConsole.DTOs;
+using InventoryManagementConsole.Services;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Threading.Tasks;
+using InventoryManagementConsole.Utils;
+using InventoryManagementConsole.Menu.Interfaces;
 
 namespace InventoryManagementConsole.Menus
 {
-    public class CategoryMenu
+    public class CategoryMenu : IMenu
     {
-        public static async Task Show()
+        public async Task Show()
         {
             IConfiguration configuration = new ConfigurationBuilder()
                                                         .AddJsonFile("appsettings.json")
@@ -28,12 +33,54 @@ namespace InventoryManagementConsole.Menus
 
                 switch (option)
                 {
-                    case "1": await service.GetAllCategoriesAsync(); break;
-                    case "2": await service.AddCategoryAsync(); break;
-                    case "3": await service.UpdateCategoryAsync(); break;
-                    case "4": await service.DeleteCategoryAsync(); break;
-                    case "0": return;
-                    default: Console.WriteLine("Invalid option."); break;
+                    case "1":
+                        try
+                        {
+                            var categories = await service.GetAllCategoriesAsync();
+                            if (categories.Count == 0)
+                            {
+                                Console.WriteLine("No categories available.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("=== Categories ===");
+                                foreach (var cat in categories)
+                                {
+                                    Console.WriteLine($"C.Id : {cat.CategoryId}  | Name :{cat.CategoryName}");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+                        break;
+
+                    case "2":
+                        var name = CategoryInputHelper.ReadCategoryName();
+                        var category = new CategoryDto { CategoryName = name };
+                        var addResult = await service.AddCategoryAsync(category);
+                        Console.WriteLine(addResult);
+                        break;
+
+                    case "3":
+                        var (updateId, newName) = CategoryInputHelper.ReadCategoryUpdateInfo();
+                        var updateResult = await service.UpdateCategoryAsync(updateId, newName);
+                        Console.WriteLine(updateResult);
+                        break;
+
+                    case "4":
+                        int deleteId = CategoryInputHelper.ReadCategoryId("delete");
+                        var deleteResult = await service.DeleteCategoryAsync(deleteId);
+                        Console.WriteLine(deleteResult);
+                        break;
+
+                    case "0":
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
                 }
 
                 Console.WriteLine("\nPress Enter to continue...");

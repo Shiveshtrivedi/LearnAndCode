@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InventoryManagementConsole.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace InventoryManagementConsole.Services
 {
     public interface ICategoryService
     {
-        Task GetAllCategoriesAsync();
-        Task AddCategoryAsync();
-        Task UpdateCategoryAsync();
-        Task DeleteCategoryAsync();
+        Task<List<CategoryDto>> GetAllCategoriesAsync();
+        Task<string> AddCategoryAsync(CategoryDto category);
+        Task<string> UpdateCategoryAsync(int id, string newName);
+        Task<string> DeleteCategoryAsync(int id);
     }
 }
